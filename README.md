@@ -1,6 +1,9 @@
 <p align="center">
-# HelloFood
-
+ <p align="center">
+<h1> 
+HelloFood
+</h1>
+</p>
 프로젝트 명 : Hello Food - 냉장고를 부탁해
 
 # 선정 이유
@@ -56,4 +59,4 @@ My SQL
 Version Control :
 
 Git, GitHub
-</p>
+
