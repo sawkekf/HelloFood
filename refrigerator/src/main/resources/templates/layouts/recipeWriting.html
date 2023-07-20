@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/board.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <title>레시피 게시판</title>
+<style>
+
+    textarea{
+      resize: none;
+    }
+	
+	form{
+      background-color: rgba(255,255,255,0.8);
+      opacity : 0.9;
+      width: 1629px;
+      margin: 1% 5% 0px;
+      border-radius: 15px;
+      padding-bottom: 25px;
+      padding-left: 100px;
+      padding-top: 25px;
+	}
+	
+	h1{
+		margin-bottom : 50px;
+		position: relative;
+		top: 25px;
+	}
+	
+	.headerContainer{
+		border: 1px solid silver;
+		width : 1300px;
+		margin-left: 125px;
+		margin-bottom: 25px; 
+	}
+	#title{
+		border: 1px solid silver;
+		border-radius : 3px;
+		width: 776px;
+		height : 20px;
+		margin-left: 20px;
+		margin-top: 20px;
+	}
+	#difficulty{
+		border: 1px solid silver;
+		border-radius : 3px;
+		width: 200px;
+		height : 20px;
+		margin-left: 20px;
+		margin-top: 5px;
+		color: gray;
+	}
+	#kcalContainer{
+		display: block;
+	}
+	#kcal{
+		border: 1px solid silver;
+		border-radius : 3px;
+		display : inline-block;
+		margin-left: 20px;
+		margin-top: 5px;
+	}
+	#capImage{
+      display: inline-block;
+      border: 1px solid silver;
+      background-color: white;
+      height: 184px;
+      width: 219px;
+      text-align: center;
+      position: absolute;
+      left: 1288px;
+      top: 262px;
+	}
+	#capImageBox{
+		display : inline-block;
+		margin-left: 20px;
+		margin-top: 5px;
+	}
+	.label{
+		vertical-align : text-bottom;
+		text-align: center;
+		font-size: 10px;
+		color: silver;
+		display : inline-block;
+		height: 81px;
+		width: 81px;
+	}
+    .label2{
+      vertical-align : text-bottom;
+      text-align: center;
+      font-size: 10px;
+      color: silver;
+      display : inline-block;
+      height: 184px;
+      width: 219px;
+    }
+	.imgBox{
+		display: inline-block;
+		border: 1px solid silver;
+		background-color : white;
+		height: 79px;
+		width:  79px;
+		text-align: center;
+		margin-left: 10px;
+		position: relative;
+		bottom: 3px;
+	}
+	
+	#recipeIngrediant{
+      margin-left: 20px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      width: 800px;
+      position: relative;
+      left: 108px;
+      min-height: 74px;
+	}
+	#addIngButton{
+		border: 1px solid gray;
+		border-radius : 3px;
+		margin-bottom: 10px;
+		display: block;
+		color: coral;
+		font-weight: bold;
+	}
+	.ingBox{
+		margin-bottom: 5px;
+		margin-left : 5px;
+		display: inline-block;
+	}
+	[name=ingrediant]{
+		border: 1px solid silver;
+		border-radius : 3px;
+		height: 30px;
+	}
+	[name=ingrediantVol]{
+		border: 1px solid silver;
+		border-radius : 3px;
+		margin-left : 5px;
+		margin-right : 5px;
+		height: 30px;
+	}
+	.ingCancle{
+		position: relative;
+		top: 10px;
+	}
+	#contentContainer{
+		border: 1px solid silver;
+		width : 1300px;
+		margin-left: 125px; 
+	}
+	#stepTitle{
+		font-size : 25px;
+		margin-top : 20px;
+		margin-left : 20px;
+		font-weight: bolder;
+	}
+	.contents{
+		margin-left: 100px;
+		margin-top: 20px;
+	}
+	.step{
+		margin-right: 20px;
+		color: coral;
+		font-size: 25px;
+		font-weight: bold;
+		position: relative;
+		bottom: 35px;
+	}
+	textarea{
+		border: 1px solid silver;
+		border-radius : 3px;
+	}
+	
+	[name=recipeImages]{
+		margin-left: 20px;
+	}
+	.content{
+		margin-bottom: 10px;
+	}
+	#plusAndMinus{
+      margin-left: 500px;
+	}
+	.plusAndminus{
+		margin-left : 20px;
+		margin-bottom : 50px;
+		border : 1px solid silver; 
+		border-radius : 3px;
+		height: 30px;
+		font-size: 15px;
+		font-weight: bold;
+		color: coral;
+	}
+	#tip{
+		font-size : 25px;
+		font-weight: bolder;
+		margin-left: 20px;
+		margin-right: 20px;
+		position: relative;
+		bottom: 30px;
+		color: black;
+	}
+	#tipContainer{
+		margin-bottom: 50px;
+	}
+	#footContainer{
+		border: 1px solid silver;
+		width : 1300px;
+		height : 100px;
+		margin-left: 125px;
+		margin-top: 50px;
+		margin-bottom: 25px; 
+	}
+	.writeButton{
+		margin-top : 35px;
+		margin-left : 550px;
+		height : 30px;
+		width : 100px;
+		background-color: #2F89DD;
+		border: none;
+		border-radius: 3px;
+		font-size: 15px;
+		font-weight: bold;
+		color: white;
+	}
+	.cancleButton{
+		margin-top : 35px;
+		margin-left : 20px;
+		height : 30px;
+		width : 100px;
+		border-radius: 3px;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	[type=file]{
+		position: absolute;
+   		width: 0;
+    	height: 0;
+    	padding: 0;
+    	overflow: hidden;
+    	border: 0;
+	}
+	.cancleBtn{
+      display: inline-block;
+      margin-left: 10px;
+      position: relative;
+      left: 1169px;
+      top: 108px;
+	}
+	.images{
+		display: inline-block;
+	}
+
+    .textArea{
+        width: 889px;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script layout:fragment="javascript" th:inline="javascript">
+function changeVal(){
+        var checkBox = document.getElementById("notice");
+        var notice = document.getElementById("noticeCheck");
+        console.log(checkBox.checked);
+        notice.value="Y";
+    if(!checkBox.checked){
+    	notice.value="N";
+    }
+        console.log(notice);
+}
+var count = 2;
+function plus(){
+	var contents = document.getElementById("content1").parentNode.parentNode
+	if(10>count){
+		var checkCount='0'+count
+	}else{
+		var checkCount=count
+	}
+	console.log(contents)
+    var plusContent = document.createElement("div")
+    plusContent.className="content";
+    contents.appendChild(plusContent)
+    plusContent.innerHTML=`<span class="step">step.${checkCount}</span><textarea id="content${count}" name="recipeContent" rows="5" cols="100" class="textArea"></textarea><div class="imgBox"><label class="label" for="Image${count}">이미지 추가</label><input type="file" name="recipeImages" id="Image${count}" onchange="plusTemporal(this.id)"/></div>`
+    count++;
+}
+
+function del(){
+	var parentContent = document.getElementById("content1").parentNode.parentNode
+    var contents = document.getElementById("content1").parentNode.parentNode.lastChild
+    console.log(parentContent.firstElementChild)
+    console.log(contents)
+    if(parentContent.firstElementChild!=contents){     
+    contents.remove();
+    	if(count>2){
+			count--;        	
+    	}
+    }
+}
+
+function checkContent(){
+	
+	var contents = $('[name=recipeContent]').length
+	var ingredients = $('[name=ingrediant]').length
+	var ingVols = $('[name=ingrediantVol]').length
+	
+	for(var i=0; i<contents; i++){
+		if($.trim($('[name=recipeContent]').eq(i).val())==''){
+			var contentNull = 'null'
+		}
+	}
+	
+	for(var i=0; i<ingredients; i++){
+		if($.trim($('[name=ingrediant]').eq(i).val())==''){
+			var ingNull = 'null'
+		}
+	}
+	
+	for(var i=0; i<ingVols; i++){
+		if($.trim($('[name=ingrediantVol]').eq(i).val())==''){
+			var ingVolNull = 'null'
+		}
+	}
+	
+	if($.trim($('#title').val())==''){
+		alert('제목을 입력해주세요')
+		$('#title').focus();
+	}else if($('#kcal').val()=='') {
+		alert('칼로리를 입력해주세요')
+		$('#kcal').focus();
+	}else if(ingNull=='null'){
+		alert('재료를 입력해주세요')
+		for(var i=0; i<ingredients; i++){
+			if($.trim($('[name=ingrediant]').eq(i).val())==''){
+				$('[name=ingrediant]').eq(i).focus();
+				break;
+			}
+		}
+	}else if(ingVolNull=='null'){
+		alert('재료의 용량을 입력해주세요')
+		for(var i=0; i<ingVols; i++){
+			if($.trim($('[name=ingrediantVol]').eq(i).val())==''){
+				$('[name=ingrediantVol]').eq(i).focus();
+				break;
+			}
+		}
+	}else if(contentNull=='null'){
+		alert('내용을 입력해주세요')
+		for(var i=0; i<contents; i++){
+			if($.trim($('[name=recipeContent]').eq(i).val())==''){
+				$('[name=recipeContent]').eq(i).focus();
+				break;
+			}
+		}
+	}else{
+		$('#form').submit();
+	}
+}
+
+function addIngrediant(){
+	var ingCount = $('[name=ingrediant]').length
+	var ingrediants = `<div id="ing${ingCount+1}box" class="ingBox"><input type="text" name="ingrediant" id="ing${ingCount+1}" placeholder="재료입력"/><input type="text" name="ingrediantVol" id="ing${ingCount+1}vol"  placeholder="용량입력"/><button type="button" class="ingCancle" value="ing${ingCount+1}" onclick="delIng(this.value)">x</button></div>`;
+	$('#recipeIngrediant').append(ingrediants);
+}
+
+function delIng(t){
+	if($('#recipeIngrediant').children().length>3){
+	$('#'+t+'box').remove();
+	}
+}
+
+$(document).ready(function memCheck(){
+		var memRole = [[${member.role}]];
+			if(memRole!='ADMIN'){
+				$('.mypage_form').css('height','160px');
+			}
+	});
+
+function plusTemporal(t){
+	var token=$("meta[name='_csrf']").attr("content");
+    var header=$("meta[name='_csrf_header']").attr("content");
+    var fileSize = 10 * 1024 * 1024 ;
+	var fileInput = $('#'+t)[0];
+	var file = fileInput.files[0];
+	var url = "/cookBoard/doCookImageSet"
+	var fileName = file.name;
+	var fileCheck = fileName.split('.')[1];
+	if(fileCheck!='jpg' && fileCheck!='gif' && fileCheck!='png' && fileCheck!='jpeg'){
+		alert('jpg, jpeg, gif, png 이외의 파일은 등록되지 않습니다.')
+		$('#'+t).val('');
+	}else if(fileSize<file.size){
+		alert('10MB이상의 이미지 파일은 등록할 수 없습니다.');
+		$('#'+t).val('');
+	}else{
+		var formData = new FormData();
+		formData.append('image',file);
+			$.ajax({
+				url : url,
+				type : 'POST',
+				enctype:'multipart/form-data',
+				contentType : false,
+		        processData : false, 
+				data : formData,
+				beforeSend : function(xhr){
+			        xhr.setRequestHeader(header,token);
+			      },
+				success : function(result){
+					var imageUrl = result;
+					var className = $('#'+t).parent().attr('class');
+					if(className==null){
+						var img = '<img src='+result+` style="width:219px; height:184px;" class="${t} images">`
+						var button = `<button type="button" onclick="deleteTemporal(this.value)" value="${t}" class="cancleBtn">x</button>`;
+					}else{
+						var img = '<img src='+result+` style="width:79px; height:79px;" class="${t} images">`
+						var button = `<button type="button" onclick="deleteTemporal(this.value)" value="${t}" style="margin-left : 10px">x</button>`;
+					}
+					$('#'+t).parent().append(img);
+					$('#'+t).parent().after(button);
+					$('#'+t).parent().css('bottom','1px');
+					$('[for='+t+']').remove();
+				},
+				error : function(){
+					alert('error')
+				}
+				
+			})
+	}
+}
+
+function deleteTemporal(t){
+	var token=$("meta[name='_csrf']").attr("content");
+    var header=$("meta[name='_csrf_header']").attr("content")
+    var url = '/recipeBoard/removeimagebyurl'
+    var oriName = $('.'+t).attr('src');
+    var newInput =`<input type="file" name="recipeImages" id="${t}" onchange="plusTemporal(this.id)">`
+    if(t=='Image0'){
+   		var newLabel =`<label class="label" for="${t}">대표 이미지</label>`
+    }else{
+    	var newLabel =`<label class="label" for="${t}">이미지 추가</label>`
+    }
+    console.log(oriName);
+    $.ajax({
+    	url : url,
+    	type : 'POST',
+    	data : {
+    		oriName : oriName
+    	},
+    	beforeSend : function(xhr){
+	        xhr.setRequestHeader(header,token);
+	      },
+		success : function(result){	
+			$('#'+t).remove();
+			$('.'+t).parent().append(newInput);
+			$('.'+t).remove();
+			$('#'+t).parent().append(newLabel);
+			$('#'+t).parent().css('bottom','3px');
+			$('[value='+t+']').remove();
+		},
+		error : function(){
+			
+		}
+    	
+    });
+}
+
+$(document).ready(function(){
+	$('.w-nav-link').eq(1).css({'color':'black','font-weight':'bolder'});
+});
+
+</script>
+</head>
+<body class="body">
+<div th:replace="fragments/gnb::navi"></div>
+<div layout:fragment="content"></div>
+
+
+
+
+</body>
+</html>

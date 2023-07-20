@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/css/find/findPW.css" rel="stylesheet" type="text/css"/>
+    <title>Find Password</title>
+</head>
+
+<body>
+<img th:src="@{/img/logo_black.png}" onclick="location.href='/';" class="logo"/>
+<div class="container" id="container">
+    <div class="col align-items-center flex-col">
+        <div class="form-wrapper align-items-center">
+            <div class="form upscale">
+                <div class="input-group">
+                    <input id="name" placeholder=" " type="text">
+                    <label for="name">이름</label>
+                </div>
+                <div class="input-group">
+                    <input id="email" placeholder=" " type="text">
+                    <label for="email">이메일</label>
+                    <a class="button-search" id="sendMailBtn" type="button">
+                        <img alt="이미지" class="btnImg" th:src="@{/img/find/search.png}">
+                    </a>
+                </div>
+                <div class="input-group">
+                    <input id="checkInput" placeholder=" ">
+                    <label for="checkInput">인증번호</label>
+                    <a class="button-search confirm" id="confirmBtn" type="button">
+                        <img alt="이미지" class="btnImg" th:src="@{/img/find/check.png}">
+                    </a>
+                </div>
+                <div style="display: flex;">
+                    <b onclick="location.href='/member/login'" style="cursor: pointer;">로그인</b>
+                    <b onclick="location.href='/member/findEmail'" style="cursor: pointer;">이메일 찾기</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#sendMailBtn').click(function () {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var email = $('#email').val();
+        var name = $('#name').val();
+
+        $.ajax({
+            url: "/member/mailChk",
+            type: "post",
+            data: {
+                email,
+                name
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                alert("메일을 보냈습니다.");
+                console.log("data : " + data);
+                check(data);
+            },
+            error: function (request, status, error) {
+                alert("입력하신 정보와 일치하는 이메일이 없습니다.");
+                console.log(error);
+            }
+        })
+    })
+
+    function check(data) {
+        var checkInput = document.getElementById("checkInput")
+
+        $('#confirmBtn').off('click').on('click', function () {
+            if (checkInput.value === data) {
+                alert("인증되었습니다!");
+                data = '';
+                window.location.href = "/member/changePW";
+            } else {
+                alert("불일치! 다시 확인해주세요");
+                data = '';
+            }
+        })
+    }
+</script>
+<script src="/js/find.js"></script>
+</body>
+
+
+</html>

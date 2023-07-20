@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/board.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <title>Title</title>
+	<style>
+	
+#writingContainer{
+	background-color: rgba(255,255,255,0.8);
+      opacity : 0.9;
+      width: 1629px;
+      margin: 1% 5% 0px;
+      border-radius: 15px;
+      padding-bottom: 25px;
+      padding-left: 100px;
+      padding-top: 25px;
+}
+
+#notifyButton{
+  position: relative;
+  top: 6px;
+	cursor: pointer;
+}
+
+#star{
+	display: inline-block;
+	 position: relative;
+	 top : 1px;
+	 cursor: pointer;
+}
+
+.buttonContainer{
+	margin-left : 752px;
+	display: inline-block;
+	position: relative;
+	top : 10px;
+}
+
+.reButton{
+	margin-left : 494px;
+	position : relative;
+	bottom : 18px;
+	background-color: skyblue;
+	border: 1px solid gray;
+	border-radius: 10px;
+	height: 50px;
+	width: 100px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.delButton{
+	margin-left : 20px;
+	position : relative;
+	bottom : 18px;
+	background-color: skyblue;
+	border: 1px solid gray;
+	border-radius: 10px;
+	height: 50px;
+	width: 100px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.seenAndRecom{
+	position: relative;
+	bottom: 25px;
+}
+
+.capImage{
+	display: inline-block;
+    position: relative;
+}
+
+.ingredientContainger{
+	display: inline-block;
+	margin-left : 20px;
+	border : 1px solid silver;
+	width: 1300px;
+	height: 202px;
+	position: relative;
+	bottom: 80px;
+	overflow: scroll;
+}
+
+.ingredientContainger::-webkit-scrollbar{
+	display: none;
+}
+
+.ingTd{
+  font-family: 'Do Hyeon', sans-serif;
+  display: inline-block;
+  width: 100px;
+  /* font-weight: bold; */
+  font-size: 20px;
+}
+
+.ingTd2{
+  font-family: 'Do Hyeon', sans-serif;
+  width: 150px;
+  margin-right: 30px;
+  display: inline-block;
+}
+
+.ingText{
+	display : inline-block;
+	width: 100px;
+	text-align: left;
+}
+
+.ingTr{
+	display : block;
+	width : 800px;
+	margin-bottom: 30px;
+}
+
+h1{
+	display: inline-block;
+}	
+
+.totalContainer{
+	width: 1525px;
+	min-height : 770px;
+	border: 1px solid silver;
+	margin-bottom: 20px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.recipeStep{
+	font-family: 'Do Hyeon', sans-serif;
+	font-weight: bolder;
+	font-size: 30px;
+	margin-bottom: 50px;
+	margin-left: 50px;
+}
+
+.step{
+	margin-right: 50px;
+	margin-left : 60px;
+	color: coral;
+	font-size: 40px;
+	font-weight: bold;
+	display: inline-block;
+	height: 200px;
+	padding: 0px;
+	position: relative;
+	top: 50px;
+}
+.textBox{
+	display: inline-block;
+	border: 1px solid gray;
+	border-radius : 10px;
+	height: 200px;
+	width: 1150px;
+	padding-top: 10px;
+	padding-left: 10px;
+	word-break:break-all;
+}
+
+.text{
+	margin-right : 20px;
+	height: 200px;
+	width: 950px;
+	display: inline-block;
+	padding: 5px;
+	border: 1px solid silver;
+	border-radius : 3px; 
+	background-color: white;
+	word-wrap: break-word;
+}
+.buttonContainer{
+	margin-bottom: 20px
+}
+
+.contentContainer{
+	display: inline-block;
+	margin-left: 20px;
+	width: 1550px;
+}
+.recipe{
+	width: 1550px;
+	height : 300px;
+}
+
+.img{
+	display: inline-block;
+}
+.commentsContainer{
+	border:1px solid silver;
+	width: 1505px;
+	min-height: 200px;
+	padding: 10px;
+}
+.image{
+	display : inline-block;
+	height: 210px;
+	width: 210px;
+}
+.contents{
+	display: inline-block;
+	border: 1px solid black;
+	height: 200px;
+	width: 850px;
+}
+
+.seen{
+	display: inline-block;
+	color: gray;
+}
+
+.recomCount{
+	display: inline-block;
+	color: gray;
+}
+
+.regDate{
+	display: inline-block;
+	color: gray;
+}
+
+.nick{
+	display: inline-block;
+	color: gray;
+	font-weight: bold;
+}
+.titleBox{
+	font-family: 'Do Hyeon', sans-serif;
+	position : relative;
+	margin-left: 430px;
+	width: 650px;
+	position: relative;
+	bottom : 110px;
+}
+
+
+#goodJob{
+	position: relative;
+	top: 6px;
+	left : 4px;
+	cursor: pointer;
+}
+
+.imgTd{
+	height: 210px;
+	width : 210px;
+	display: inline-block;
+	padding: 0px;
+	border: 1px solid silver;
+	background-color: #EAEAEA;
+	
+}
+
+.cookTip{
+	font-family: 'Do Hyeon', sans-serif;
+	font-weight: bolder;
+	font-size: 30px;
+	margin-bottom: 20px;
+	margin-left: 50px;
+}
+
+.cookTipText{
+	margin-left: 258px;
+    width: 951px;
+    border: 1px solid silver;
+    border-radius: 3px;
+    min-height: 200px;
+    padding-top: 10px;
+    padding-left: 10px;
+    background-color: white;
+    word-wrap: break-word;
+}
+
+#commentInput{
+	margin-top : 30px;
+	width: 1350px;
+	height: 100px;
+	margin-right : 50px;
+	border-color: silver;
+	border-radius : 3px;
+  resize:  none;
+}
+
+#commentButton{
+	height: 100px;
+	width : 115px;
+	position : relative;
+	bottom : 47px;
+	border-color: silver;
+	background-color: white;
+	border-radius : 3px; 
+}
+
+.commentExtra{
+	display: inline-block;
+	border: none;
+	background-color: rgba(0,0,0,0);
+	color: gray;
+}
+
+.comm{
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.nickName{
+	font-weight: bolder;
+	font-size: 20px;
+}
+
+.commentContent{
+	display : inline-block;
+	word-break:break-all;
+	position: relative;
+	top: 10px;
+  width: 1040px;
+}
+
+.comReg{
+	position: relative;
+	top: 10px;
+}
+
+.commentTr{
+	display : block;
+	border-bottom: 1px solid silver;
+}
+
+.backButton{
+	display : block;
+	width : 100px;
+	height : 50px;
+	margin-left: 700px;
+	margin-top: 50px;
+	background-color: skyblue;
+	border : none;
+	color : white;
+	font-weight: bolder;
+	position: relative; 
+	
+}
+
+li{
+  display: inline-block;
+}
+
+.page-link{
+  font-weight: bolder;
+  font-size: 20px;
+  color: black;
+  font-family : sans-serif;
+  border: 1px solid silver;
+  padding-top : 0px;
+  padding-bottom : 2px;
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-left: 5px;
+}
+
+.pagination{
+
+}
+.pageContainer{
+  width: 98%;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+}
+
+
+[type=button]{
+	cursor: pointer;
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script layout:fragment="javascript" th:inline="javascript">
+$(document).ready(function(){
+	  /*<![CDATA[*/
+	var ErrorMessage = [[${ErrorMessage}]];
+	console.log(ErrorMessage);
+	if(ErrorMessage!=null){
+	alert(ErrorMessage);
+	location.href="/recipeView?writingId="+[[${detailViewDTO.recipeBoard.writingid}]];
+	}
+  recomFunc2();
+	var Follow = [[${Following}]];
+	var star = $('#star')
+	console.log(Follow);
+	if(Follow==0){
+		star.attr("src","/img/beanstar.png")
+	}else{
+		star.attr("src","/img/fullstar2.png")
+	}
+	
+	var writerId = [[${detailViewDTO.recipeBoard.member.id}]];
+	var memberId = [[${member.id}]];
+	
+	if(writerId==memberId){
+		$('.reButton').css('visibility','visible');
+		$('.delButton').css('visibility','visible');
+	}else{
+		$('.reButton').css('visibility','hidden');
+		$('.delButton').css('visibility','hidden');
+	}
+	
+	var commentsLength = $('.commentsContainer').children().eq(0).children().children().length
+	console.log(commentsLength+"렝스")
+	if(commentsLength==0){
+		$('.commentsContainer').css('display','none');
+	}
+	
+	var memberName = [[${member.name}]];
+	if(memberName=='guest'){
+		$('#notifyButton').css('visibility','hidden');
+		$('.commentNotifying').css('visibility','hidden');
+	}
+    recomFunc2();
+	$('.w-nav-link').eq(1).css({'color':'black','font-weight':'bolder'});
+
+/*]]>*/
+});
+
+$(document).ready(function memCheck(){
+		var memRole = [[${member.role}]];
+			if(memRole!='ADMIN'){
+				$('.mypage_form').css('height','160px');
+			}
+	});
+
+function followFunc(){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+	var star = $('#star')
+	var nowStar = $('#star').attr("src")
+	if(nowStar=="/img/beanstar.png"){
+	star.attr("src","/img/fullstar2.png")
+	}else{
+		star.attr("src","/img/beanstar.png")
+	}
+	var url = '/recipeBoard/updateFollow/'+[[${detailViewDTO.recipeBoard.writingid}]]
+	$.ajax({
+		type: 'POST',
+			url : url,
+			beforeSend : function(xhr){
+		        xhr.setRequestHeader(header,token);
+		      },
+			success: function(result){
+
+			},
+			error:function(){
+
+			}
+	});
+}
+
+function commentSend(){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+	var bannCheck = [[${member.banned}]]
+	var bannDate = [[${#temporals.format(member.Banndate,'yyyy-MM-dd HH:mm:ss')}]]
+  var memberName = [[${member.name}]];
+	console.log(bannCheck);
+	console.log(memberName);
+	if(bannCheck=='Y'){
+		alert('차단당하셨습니당. 차단기간은 ['+bannDate+'] 까지입니당')
+	}else if(memberName=='guest'){
+		alert('로그인 바랍니다.')
+	}else{
+		var comment = $('#commentInput').val()
+		var writingId =  [[${detailViewDTO.recipeBoard.writingid}]];
+		var url = "/recipeBoard/recipeCommentWriting/"+writingId
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : {
+				comment : comment
+			},
+			beforeSend : function(xhr){
+		        /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+		        xhr.setRequestHeader(header,token);
+		      },
+			success : function(result){
+				location.href='/recipeBoard/recipeView?writingId='+writingId
+			},
+			error : function(){
+				alert('error')
+			}
+
+		})
+	}
+}
+
+function reComment(t){
+	console.log(t)
+	$('#commentButton').attr('onclick','commentResend()')
+	$('#commentButton').text('댓글수정')
+	var commentId = $('#'+t).val();
+	console.log(commentId);
+	$('#commentButton').val(commentId);
+	var past = $('.'+t+'content').text();
+	$('#commentInput').val(past);
+}
+
+function commentResend(){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+	var bannCheck = [[${member.banned}]]
+	var bannDate = [[${#temporals.format(member.Banndate,'yyyy-MM-dd HH:mm:ss')}]]
+	console.log(bannCheck);
+	if(bannCheck=='Y'){
+		alert('차단당하셨습니당. 차단기간은 ['+bannDate+'] 까지입니당')
+	}else{
+		var writingId =  [[${detailViewDTO.recipeBoard.writingid}]];
+		var commentId = $('#commentButton').val();
+		var url = '/recipeBoard/recipeCommentResend/'+commentId;
+		var content = $('#commentInput').val();
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : {
+				content : content
+			},
+			beforeSend : function(xhr){
+		        /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+		        xhr.setRequestHeader(header,token);
+		      },
+			success : function(result){
+				location.href='/recipeBoard/recipeView?writingId='+writingId;
+			},
+			error : function(){
+				alert('error')
+			}
+		})
+	}
+}
+
+function enter(){
+
+	if(event.keyCode==13){
+
+		if($('#commentButton').attr('onclick')=='commentSend()'){
+			commentSend();
+		}else if($('#commentButton').attr('onclick')=='commentResend()'){
+			commentResend();
+		}
+
+	}
+}
+function recomFunc2(){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+  var writingId =  [[${detailViewDTO.recipeBoard.writingid}]];
+
+
+  var url = '/recipeBoard/updateRecom/'+writingId;
+  $.ajax({
+    url : url,
+    type : 'POST',
+    beforeSend : function(xhr){
+      /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+      xhr.setRequestHeader(header,token);
+    },
+    success : function(result){
+      if(result=="true"){
+        console.log(result);
+
+        $('#goodJob').attr('src','/img/goodJob.png');
+
+      }else if(result="false"){
+
+        $('#goodJob').attr('src','/img/like.png');
+      }
+    },
+    error : function(){
+      alert('error');
+    }
+  });
+
+}
+function recomFunc(){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+	var writingId =  [[${detailViewDTO.recipeBoard.writingid}]];
+	var recomCount = $('.recomCount').text();
+	var recomCount = recomCount.split('추천수 : ')[1];
+	recomCount = recomCount.split('|')[0];
+	console.log(recomCount);
+	recomCount = Number(recomCount);
+	var plusCount = recomCount+1;
+
+	var url = '/recipeBoard/updateRecomCount/'+writingId;
+	$.ajax({
+		url : url,
+		type : 'POST',
+		beforeSend : function(xhr){
+	        /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+	        xhr.setRequestHeader(header,token);
+	      },
+		success : function(result){
+			if(result=="true"){
+              $('.recomCount').val(plusCount);
+              $('.recomCount').text('추천수 : '+plusCount+' | ');
+              $('#goodJob').attr('src','/img/like.png');
+			}else if(result="false"){
+				alert('이미 추천한 게시글입니다.')
+			}
+		},
+		error : function(){
+			alert('error');
+		}
+	});
+
+}
+
+function delFunc(t){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+	var writingId =  [[${detailViewDTO.recipeBoard.writingid}]];
+	var commentId = $('#'+t).val();
+	var url = "/recipeBoard/recipeCommentDelete/"+commentId;
+	$.ajax({
+		url : url,
+		type : 'POST',
+		beforeSend : function(xhr){
+	        /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+	        xhr.setRequestHeader(header,token);
+	      },
+		success : function(result){
+			$('#'+t).parent().parent().remove();
+          var commentsLength = $('.commentsContainer').children().eq(0).children().children().length
+          console.log(commentsLength+"렝스")
+          if(commentsLength==0){
+            $('.commentsContainer').css('display','none');
+          }
+		},
+		error : function(){
+			alert('error');
+		}
+	})
+
+}
+
+function notifyingMain(){
+
+	var title = [[${detailViewDTO.recipeBoard.title}]];
+	var contentAll = $('.text').length;
+	var allContent='';
+	for(var i=0; i<contentAll; i++){
+		var content = $('.text').eq(i).text()+' ';
+		console.log(content);
+		allContent+=content;
+	}
+	var writingId = [[${detailViewDTO.recipeBoard.writingid}]];
+	var memMail = [[${detailViewDTO.recipeBoard.member.email}]];
+	var memNick = [[${detailViewDTO.recipeBoard.member.nickname}]];
+	var boardId = [[${board.boardid}]];
+	window.open('','notifyingPopUp',"toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=900, height=700, top=0,left=20")
+	$('#notifiedTitle').val(title);
+	$('#notifiedContent').val(allContent);
+	$('#notifiedWritingId').val(writingId);
+	$('#notifiedCommentId').val('');
+	$('#notifiedMemMail').val(memMail);
+	$('#notifiedMemNick').val(memNick);
+	$('#notifiedBoardId').val(boardId);
+	$('#notifying').submit();
+}
+
+function notifyingComment(t){
+
+	var content = $('.'+t+'content').text();
+	var writingId = [[${detailViewDTO.recipeBoard.writingid}]];
+	var commentId = $('#'+t).val();
+	var memMail = $('.'+t+'memMail').val();
+	var memNick = $('.'+t+'memNick').text();
+	var boardId = [[${board.boardid}]];
+	console.log(commentId)
+	window.open('','notifyingPopUp',"toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=500, height=500, top=0,left=20")
+	$('#notifiedTitle').val('');
+	$('#notifiedContent').val(content);
+	$('#notifiedWritingId').val(writingId);
+	$('#notifiedCommentId').val(commentId);
+	$('#notifiedMemMail').val(memMail);
+	$('#notifiedMemNick').val(memNick);
+	$('#notifiedBoardId').val(boardId);
+	$('#notifying').submit();
+}
+</script>
+</head>
+<body class="body">
+<div th:replace="fragments/gnb::navi"></div>
+<div layout:fragment="content"></div>
+
+
+
+
+</body>
+</html>

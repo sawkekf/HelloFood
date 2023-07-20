@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/board.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <title>요리자랑 게시판</title>
+  <style>
+ 
+ #writingContainer{
+	background-color: rgba(255,255,255,0.8);
+    opacity: 0.9;
+    width: 1629px;
+    min-height: 500px;
+    margin: 1% 5% 0px;
+    border-radius: 15px;
+    padding-bottom: 25px;
+    padding-left: 100px;
+    padding-top: 25px;
+}
+
+#notifyButton{
+	display: inline-block;
+	cursor: pointer;
+}
+
+.backButton{
+	display : block;
+	width : 100px;
+	height : 50px;
+	margin-left: 700px;
+	margin-top: 50px;
+	background-color: skyblue;
+	border : none;
+	color : white;
+	font-weight: bolder;
+	position: relative; 
+	bottom: 30px;
+}
+
+.buttonContainer{
+	margin-left : 752px;
+	display: inline-block;
+	position: relative;
+	top : 10px;
+}
+
+.reButton{
+	margin-left : 550px;
+	background-color: skyblue;
+	border: 1px solid gray;
+	border-radius: 10px;
+	height: 50px;
+	width: 100px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.delButton{
+	margin-left : 20px;
+	background-color: skyblue;
+	border: 1px solid gray;
+	border-radius: 10px;
+	height: 50px;
+	width: 100px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+} 
+
+.titleBox{
+	font-family: 'Do Hyeon', sans-serif;
+	margin-left: 430px;
+	width: 650px;
+	position: relative;
+	bottom : 80px;
+}
+ 
+.contentBox{
+	border : 1px solid silver;
+	width: 1505px;
+	padding : 10px;
+	background-color : white;
+	min-height : 500px;
+	margin-bottom: 50px;
+	position: relative; 
+	bottom: 80px;
+}
+
+p{
+	margin-left: 45px;
+	width: 1220px;
+}
+
+.commentBox{
+	border : 1px solid silver;
+	background-color : white;
+	width: 1505px;
+	padding : 10px;
+	min-height: 200px;
+	position: relative; 
+	bottom: 80px;
+}
+
+.nick{
+	display: inline-block;
+	color: gray;
+	font-weight: bold;
+}
+
+.seenCount{
+	display: inline-block;
+	color: gray;
+}
+
+.recomCount{
+	display: inline-block;
+	color: gray;
+}
+
+.regDate{
+	display: inline-block;
+	color: gray;
+}
+
+.seenAndRecom{
+	position: relative;
+	bottom: 25px;
+}
+
+#goodJob{
+	display: inline-block;
+	position: relative;
+	top: 5px;
+	left : 4px;
+	cursor: pointer;
+}
+
+#commentInput{
+	margin-top : 30px;
+	width: 1350px;
+	height: 100px;
+	margin-right : 50px;
+	border-color: silver;
+	border-radius : 3px;
+  resize: none;
+}
+
+#commentButton{
+	height: 100px;
+	width : 115px;
+	border-color: silver;
+	border-radius : 3px; 
+	position: relative; 
+	bottom: 50px;
+}
+
+.commentExtra{
+	display: inline-block;
+	border: none;
+	background-color: rgba(0,0,0,0);
+	color: gray;
+}
+
+.comm{
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.nickName{
+	font-weight: bolder;
+	font-size: 20px;
+}
+
+.commentContent{
+	display : inline-block;
+	word-break:break-all;
+	position: relative;
+	top: 10px;
+}
+
+.comReg{
+	position: relative;
+	top: 10px;
+}
+
+.commentTr{
+	display : block;
+	border-bottom: 1px solid silver;
+}
+
+.content{
+	word-wrap: break-word;
+}
+
+
+.images{
+	display: block;
+}
+
+[type=button]{
+	cursor: pointer;
+}
+
+	li{
+	display: inline-block;
+}
+
+.page-link{
+	font-weight: bolder;
+	font-size: 20px;
+	color: black;
+	font-family : sans-serif;
+	border: 1px solid silver;
+	padding-top : 0px;
+	padding-bottom : 2px;
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-left: 5px;
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script layout:fragment="javascript" th:inline="javascript">
+
+$(document).ready(function(){
+	var content = [[${cookDetailViewDTO.cookBoard.content}]];
+	console.log(content);
+	$('.content').html(content);
+	
+	var memRole = [[${member.role}]];
+	if(memRole!='ADMIN'){
+		$('.mypage_form').css('height','160px');
+	}
+  var commentsLength = $('.commentBox').children().children().children().length
+  console.log(commentsLength)
+  if(commentsLength==0){
+    $('.commentBox').css('display','none');
+  }
+
+	var memberName = [[${member.name}]];
+	if(memberName=='guest'){
+		$('#notifyButton').css('visibility','hidden');
+		$('.commentNotifying').css('visibility','hidden');
+	}
+  recomFunc2();
+	$('.w-nav-link').eq(2).css({'color':'black','font-weight':'bolder'});
+	
+});
+
+function commentSend(){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+    var memberName = [[${member.name}]];
+	var bannCheck = [[${member.banned}]];
+	var bannDate = [[${#temporals.format(member.Banndate,'yyyy-MM-dd HH:mm:ss')}]]
+	console.log(bannCheck);
+	if(bannCheck=='Y'){
+		alert('차단당하셨습니당. 차단기간은 ['+bannDate+'] 까지입니당')
+	}else if(memberName=='guest'){
+		alert('로그인 후 입력 바랍니다.')
+	}else{	
+		var comment = $('#commentInput').val()
+		console.log(typeof comment);
+		var writingId =  [[${cookDetailViewDTO.cookBoard.writingid}]];
+		var url = "/cookBoard/CookCommentWriting/"+writingId
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : {
+				comment : comment
+			},
+			beforeSend : function(xhr){
+		        xhr.setRequestHeader(header,token);
+		      },
+			success : function(result){
+				location.href='/cookBoard/CookBoardDetail?writingId='+writingId
+			},
+			error : function(error){
+				alert(JSON.stringify(error))
+			}
+			
+		});	
+	}
+	
+}
+function recomFunc2(){
+  var token=$("meta[name='_csrf']").attr("content");
+  var header=$("meta[name='_csrf_header']").attr("content")
+  var writingId =  [[${cookDetailViewDTO.cookBoard.writingid}]];
+
+
+  var url = '/cookBoard/doCookRe/'+writingId;
+  $.ajax({
+    url : url,
+    type : 'POST',
+    beforeSend : function(xhr){
+      xhr.setRequestHeader(header,token);
+    },
+    success : function(result){
+      if(result=="true"){
+        console.log(result);
+        $('#goodJob').attr('src','/img/goodJob.png');
+      }else if(result="fal"){
+
+        $('#goodJob').attr('src','/img/like.png');
+      }
+    },
+    error : function(){
+      alert('error');
+    }
+  });
+
+}
+
+function recomFunc(){
+	var token=$("meta[name='_csrf']").attr("content");
+    var header=$("meta[name='_csrf_header']").attr("content")
+	var writingId =  [[${cookDetailViewDTO.cookBoard.writingid}]];
+    var recomCount = $('.recomCount').text();
+	var recomCount = recomCount.split('추천수 : ')[1];
+	recomCount = recomCount.split('|')[0];
+	recomCount = Number(recomCount);
+	var plusCount = recomCount+1;
+	
+	var url = '/cookBoard/doCookRecom/'+writingId;
+	$.ajax({
+		url : url,
+		type : 'POST',
+		beforeSend : function(xhr){
+	        xhr.setRequestHeader(header,token);
+	      },
+		success : function(result){
+			if(result=="true"){
+				console.log(result);
+				$('.recomCount').val(plusCount);
+				$('.recomCount').text('추천수 : '+plusCount+' | ');
+              $('#goodJob').attr('src','/img/like.png');
+			}else if(result="false"){
+
+				alert('이미 추천한 게시글입니다.')
+			}
+		},
+		error : function(){
+			alert('error');
+		}
+	});
+	
+}
+
+function reComment(t){
+	$('#commentButton').attr('onclick','commentResend()')
+	$('#commentButton').text('댓글수정')
+	var commentId = $('#'+t).val()
+	$('#commentButton').val(commentId);
+	var past = $('.'+t+'content').text();
+	$('#commentInput').val(past);
+}
+
+function commentResend(){
+	var token=$("meta[name='_csrf']").attr("content");
+    var header=$("meta[name='_csrf_header']").attr("content")
+	var bannCheck = [[${member.banned}]]
+	var bannDate = [[${#temporals.format(member.Banndate,'yyyy-MM-dd HH:mm:ss')}]]
+	console.log(bannCheck);
+	if(bannCheck=='Y'){
+		alert('차단당하셨습니당. 차단기간은 ['+bannDate+'] 까지입니당')
+	}else{	
+		var writingId =  [[${cookDetailViewDTO.cookBoard.writingid}]];
+		var commentId = $('#commentButton').val();
+		var url = "/cookBoard/CookCommentReWriting/"+commentId;
+		var content = $('#commentInput').val();
+		console.log(commentId);
+		console.log(content);
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : {
+				content : content
+			},
+			beforeSend : function(xhr){
+		        xhr.setRequestHeader(header,token);
+		      },
+			success : function(result){
+				location.href='/cookBoard/CookBoardDetail?writingId='+writingId;
+			},
+			error : function(){
+				alert('error')
+			}
+		})
+	}
+}
+
+function enter(){
+
+	if(event.keyCode==13){
+		
+		if($('#commentButton').attr('onclick')=='commentSend()'){
+			commentSend();	
+		}else if($('#commentButton').attr('onclick')=='commentResend()'){
+			commentResend();
+		}
+	
+	}
+}
+
+function delFunc(t){
+	var token=$("meta[name='_csrf']").attr("content");
+    var header=$("meta[name='_csrf_header']").attr("content")
+	var writingId =  [[${cookDetailViewDTO.cookBoard.writingid}]];
+	var commentId = $('#'+t).val();
+	var url = "/cookBoard/CookCommentDelete/"+commentId;
+	$.ajax({
+		url : url,
+		type : 'POST',
+		success : function(result){
+			$('#'+t).parent().parent().remove();
+		},
+		beforeSend : function(xhr){
+	        xhr.setRequestHeader(header,token);
+	      },
+		error : function(){
+			alert('error');
+		}
+	})
+	
+}
+
+function notifyingMain(){
+	
+	var title = [[${cookDetailViewDTO.cookBoard.title}]];
+	var contentAll = $('p').length;
+	var allContent='';
+	for(var i=0; i<contentAll; i++){
+		var content = $('p').eq(i).text()+' ';
+		allContent+=content;
+	}
+	var writingId = [[${cookDetailViewDTO.cookBoard.writingid}]];
+	var memMail = [[${cookDetailViewDTO.cookBoard.member.email}]];
+	var memNick = [[${cookDetailViewDTO.cookBoard.member.nickname}]];
+	var boardId = [[${board.boardid}]];
+	window.open('','notifyingPopUp',"toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=900, height=700, top=0,left=20")
+	$('#notifiedTitle').val(title);
+	$('#notifiedContent').val(allContent);
+	$('#notifiedWritingId').val(writingId);
+	$('#notifiedCommentId').val('');
+	$('#notifiedMemMail').val(memMail);
+	$('#notifiedMemNick').val(memNick);
+	$('#notifiedBoardId').val(boardId);
+	$('#notifying').submit();
+}
+
+function notifyingComment(t){
+	
+	var content = $('.'+t+'content').text();
+	var writingId = [[${cookDetailViewDTO.cookBoard.writingid}]];
+	var commentId = $('#'+t).val();
+	var memMail = $('.'+t+'memMail').val();
+	var memNick = $('.'+t+'memNick').text();
+	var boardId = [[${board.boardid}]];
+	console.log(commentId)
+	window.open('','notifyingPopUp',"toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=500, height=500, top=0,left=20")
+	$('#notifiedTitle').val('');
+	$('#notifiedContent').val(content);
+	$('#notifiedWritingId').val(writingId);
+	$('#notifiedCommentId').val(commentId);
+	$('#notifiedMemMail').val(memMail);
+	$('#notifiedMemNick').val(memNick);
+	$('#notifiedBoardId').val(boardId);
+	$('#notifying').submit();
+
+}
+
+</script>
+</head>
+<body class="body">
+<div th:replace="fragments/gnb::navi"></div>
+<div layout:fragment="content"></div>
+
+</body>
+</html>

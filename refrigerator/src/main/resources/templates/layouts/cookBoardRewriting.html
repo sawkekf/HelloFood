@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/board.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor.css" rel="stylesheet"> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor-contents.css" rel="stylesheet"> -->
+  <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+  <!-- languages (Basic Language: English/en) -->
+  <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
+  <title>요리자랑 게시판</title>
+  <style>
+
+    .se-selector-color{
+      max-width: 420px;
+    }
+
+    .sun-editor .se-list-layer .se-selector-color {
+      display: flex;
+      width: max-content;
+      max-width: 420px;
+      height: auto;
+      padding: 0;
+      margin: auto;
+    }
+
+    form{
+      background-color: rgba(255,255,255,0.8);
+      opacity : 0.9;
+      width: 1629px;
+      margin: 1% 5% 0px;
+      border-radius: 15px;
+      padding-bottom: 25px;
+      padding-left: 100px;
+      padding-top: 25px;
+    }
+
+    h1{
+      margin-left: 125px;
+      margin-bottom : 50px;
+      position: relative;
+      top: 25px;
+    }
+
+    .inputContainer{
+      border: 1px solid silver;
+      margin-left: 125px;
+      padding-top: 20px;
+      padding-left : 25px;
+      padding-bottom : 20px;
+      margin-bottom : 20px;
+      width: 1275px;
+    }
+    #title{
+      width : 1244px;
+      border: 1px solid silver;
+      margin-right : 25px;
+      margin-bottom: 10px;
+    }
+
+    [type=file]{
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+    }
+
+    .content-inline{
+      display: inline-block;
+    }
+
+    .content-block{
+      display: block;
+    }
+
+    .inputFileContainer{
+      border: 1px solid silver;
+      margin-left: 125px;
+      padding-top: 20px;
+      padding-left : 25px;
+      padding-bottom : 20px;
+      margin-bottom : 20px;
+      width: 1275px;
+    }
+    .content-inline{
+      border : 1px solid silver;
+      padding : 10px;
+      width : 800px;
+      margin-right : 10px;
+      margin-bottom : 20px;
+      text-overflow : ellipsis;;
+    }
+    #footContainer{
+      border: 1px solid silver;
+      width : 1300px;
+      height : 100px;
+      margin-left: 125px;
+      margin-top: 50px;
+      margin-bottom: 25px;
+    }
+    .writeButton{
+      margin-top : 35px;
+      margin-left : 550px;
+      height : 30px;
+      width : 100px;
+      background-color: #2F89DD;
+      border: none;
+      border-radius: 3px;
+      font-size: 15px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .cancleButton{
+      margin-top : 35px;
+      margin-left : 20px;
+      height : 30px;
+      width : 100px;
+      border-radius: 3px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .label{
+      background-color: white;
+      border: 1px solid black;
+      padding : 5px;
+      border-radius: 3px;
+      width: 90px;
+      height: 25px;
+      font-size: 12px;
+      font-weight : bold;
+    }
+
+  </style>
+
+  <script layout:fragment="javascript" th:inline="javascript">
+
+    $(function(){
+      SUNEDITOR.create('content',{
+        font : [
+          '맑은고딕',
+          '굴림',
+          '바탕',
+          '돋움',
+          '궁서',
+          '휴먼편지체',
+          'Arial',
+          'Verdana',
+          'Courier New',
+          'tahoma',
+          'Do Hyeon'
+        ],
+        fontSize : [
+          8, 10, 14, 18, 24, 36, 48, 60
+        ],
+        colorList: [
+          ['#FF0000','#FF5E00','#FFBB00','#FFE400','#ABF200','#1DDB16','#00D8FF','#0054FF','#0100FF','#5F00FF','#FF00DD','#FF007F','#000000','#FFFFFF'],
+          ['#FFD8D8','#FAE0D4','#FAECC5','#FAF4C0','#E4F7BA','#CEFBC9','#D4F4FA','#D9E5FF','#DAD9FF','#E8D9FF','#FFD9FA','#FFD9EC','#F6F6F6','#EAEAEA'],
+          ['#FFA7A7','#FFC19E','#FFE08C','#FAED7D','#CEF279','#B7F0B1','#B2EBF4','#B2CCFF','#B5B2FF','#D1B2FF','#FFB2F5','#FFB2D9','#D5D5D5','#BDBDBD'],
+          ['#F15F5F','#F15F5F','#F2CB61','#E5D85C','#BCE55C','#86E57F','#5CD1E5','#6799FF','#6B66FF','#A566FF','#F361DC','#F361A6','#A6A6A6','#8C8C8C'],
+          ['#CC3D3D','#CC723D','#CCA63D','#C4B73B','#9FC93C','#47C83E','#3DB7CC','#4374D9','#4641D9','#8041D9','#D941C5','#D9418C','#747474','#5D5D5D'],
+          ['#980000','#993800','#997000','#998A00','#6B9900','#2F9D27','#008299','#003399','#050099','#3F0099','#990085','#99004C','#4C4C4C','#353535'],
+          ['#670000','#662500','#664B00','#665C00','#476600','#22741C','#005766','#002266','#030066','#2A0066','#660058','#660033','#212121','#191919']
+        ],
+        width: '100%',
+        maxWidth: '1250px',
+        minWidth: 1250,
+        minheight : '600px',
+        imageWidth : 150,
+        popupDisplay: 'local',
+        resizingBar: false,
+        buttonList : [
+          ['font', 'fontSize'],
+          ['bold', 'underline', 'italic', 'strike'],
+          ['fontColor', 'hiliteColor'],
+          ['outdent', 'indent'],
+          ['align', 'horizontalRule', 'list', 'lineHeight'],
+          ['table' ]
+        ],
+        imageFileInput : true,
+        callBackSave: function (contents) {
+          alert(contents);
+        }
+      });
+    });
+
+    $(document).ready(function(){
+      var content = /*[[${cookWritingDTO.content}]]*/'';
+      console.log(content);
+      $('.sun-editor-editable').html(content);
+      for(var i=0; i<$('.images').length; i++){
+        var contentName = $('.images').eq(i).attr('src');
+        var contentName = contentName.slice(16)
+        var className = $('.images').eq(i).attr('class');
+        className = className.slice(0,9)
+        if(i==0){
+          var rest = '<div class="'+className+' pastRep content-block"><div class="content-inline">'+contentName+'</div><button type="button" value="'+className+'" onclick="delFunc(this.value)" class="content-button">x</button></div>';
+        }else{
+          var rest = '<div class="'+className+' content-block"><div class="content-inline">'+contentName+'</div><button type="button" value="'+className+'" onclick="delFunc(this.value)" class="content-button">x</button></div>';
+        }
+        console.log(className)
+        $('.inputFileContainer').append(rest);
+        if($('.inputFileContainer').children(0)==$('#image1')){
+          console.log('check');
+        }
+		
+
+      }
+
+      if($('img').length!==0){
+        var imgClass = Number($('img:last').attr('class').slice(8,9));
+        var imgcount = imgClass;
+      }else{
+        var imgcount = 0;
+      }
+      var fileInputter = `<input type="file" id="image1" name="images" onchange="sendImage()" class="imgCount${imgcount+1}"><label for="image1" class="label1 label">이미지 등록</label>`
+
+      $('.inputFileContainer').append(fileInputter);
+
+      var memRole = [[${member.role}]];
+      if(memRole!='ADMIN'){
+        $('.mypage_form').css('height','160px');
+      }
+      
+      $('.w-nav-link').eq(2).css({'color':'black','font-weight':'bolder'});
+
+    });
+
+    function changeVal(){
+      var checkBox = document.getElementById("notice");
+      var notice = document.getElementById("noticeCheck");
+      console.log(checkBox.checked);
+      notice.value="Y";
+      if(!checkBox.checked){
+        notice.value="N";
+      }
+      console.log(notice);
+
+    }
+
+    var count = 2;
+    function sendImage(){
+      var token=$("meta[name='_csrf']").attr("content");
+      var header=$("meta[name='_csrf_header']").attr("content")
+      var fileSize = 10 * 1024 * 1024 ;
+      console.log($('img').length)
+      if($('img').length!==0){
+        var imgClass = Number($('img:last').attr('class').slice(8,9));
+        var imgcount = imgClass;
+      }else{
+        var imgcount = 0;
+      }
+      console.log(imgClass);
+      var input = `<input type="file" id="image${count}" name="images" onchange="sendImage()" class="imgCount${imgcount+2}"><label for="image${count}" class="label${count} label">이미지 등록</label>`;
+      var fileInput = $('#image'+`${count-1}`)[0];
+      var file = fileInput.files[0];
+      var fileName = file.name;
+      var fileCheck = fileName.split('.')[1];
+      var inputFileName = `<div class="imgCount${imgcount+1} content-block"><div class="content-inline">${fileName}</div><button type="button" value="imgCount${imgcount+1}" onclick="delFunc(this.value)" class="content-button">x</button></div>`;
+      console.log(file);
+      var formData = new FormData();
+      formData.append('image',file);
+      formData.append('count',count-1);
+      var url = "/cookBoard/doCookImageSet"
+
+      if(fileCheck!='jpg' && fileCheck!='gif' && fileCheck!='png' && fileCheck!='jpeg'){
+        alert('jpg, jpeg, gif, png 이외의 파일은 등록되지 않습니다.')
+        $('#image'+`${count-1}`).val('');
+      }else if(fileSize<file.size){
+        alert('10MB이상의 이미지 파일은 등록할 수 없습니다.');
+        $('#image'+`${count-1}`).val('');
+      }else{
+        $.ajax({
+
+          url : url,
+          type : 'POST',
+          enctype:'multipart/form-data',
+          contentType : false,
+          processData : false,
+          data : formData,
+          beforeSend : function(xhr){
+            xhr.setRequestHeader(header,token);
+          },
+          success : function(result){
+            var imageUrl = result;
+            var img = '<img src='+result+` style="width:200px; height:200px" class="imgCount${imgcount+1} images">`
+            $('.sun-editor-editable').append(img);
+
+          },
+          error : function(){
+            alert('error')
+          }
+
+        })
+        $('.inputFileContainer').append(inputFileName);
+        $('.inputFileContainer').append(input);
+        $('.label'+`${count-1}`).css('display','none');
+        count++;
+      }
+    }
+
+    function addContent(){
+      var value = $('.sun-editor-editable').html();
+      var content = $('#contents').val(value);
+      if($('.pastRep').length==0){
+        var newRep = $('.images:first').attr('src');
+        $('[name=repUrl]').val(newRep);
+      }
+      if($.trim($('#title').val())==''){
+        alert('제목을 입력해주세요')
+      }else if($('#contents').val()=='<p><br></p>'){
+        alert('내용을 입력해주세요')
+      }else{
+        $('#form').submit();
+      }
+    }
+
+
+    function delFunc(t){
+      var imgContent = $('.'+t)
+      var imgContent2 = $('img.'+t)
+      var imgParent = imgContent2.parent().parent();
+      console.log(imgParent.attr('class').split(' ')[1])
+      var button = $('[value='+t+']')
+      if(imgParent.attr('class').split(' ')[1]=='se-image-container'){
+        imgParent.remove();
+      }
+      imgContent.remove();
+      button.remove();
+    }
+
+    $(document).ready(function(){
+      $('.se-controller-resizing').remove();
+      $('.se-resizing-container').remove();
+      $('.se-line-breaker-component').remove();
+
+      $('.sun-editor-editable').keydown(function(){
+        var inputerLength = $('.content-block').length;
+        console.log(inputerLength);
+        for(var i=0; i<inputerLength; i++){
+          if($('img.images').eq(i).length!=0 && $('img.images').eq(i).attr('class').split(' ')[0]!=$('.content-block').eq(i).attr('class').split(' ')[0]){
+            $('.content-block').eq(i).remove();
+              console.log("1");
+          }else if($('img.images').eq(i).length!=0 && $('img.images:last').attr('class').split(' ')[0]!=$('.content-block:last').attr('class').split(' ')[0]){
+            $('.content-block:last').remove();
+            console.log("2");
+          }else if($('img.images').length==0){
+            console.log("3");
+            console.log("으악")
+            $('.content-block').remove();
+          }
+        }
+        var filesLength = $('input[name=images]').length -1;
+        for(var i=0; i<filesLength; i++){
+          var checkName = $('input[name=images]').eq(i).attr('class');
+          if($('img.'+checkName).length==0 && !$('input[name=images]:last')){
+            var forLabelDel = $('input.'+checkName).attr('id');
+            $('[for='+forLabelDel+']').remove();
+            $('input.'+checkName).remove();
+            console.log("4");
+          }
+        }
+        var imgClass = Number($('img:last').attr('class').slice(8,9));
+        var imgcount = imgClass;
+        $('input[name=images]:last').attr('class',`imgCount${imgcount+1}`)
+        console.log(imgcount);
+      });
+    });
+
+  </script>
+</head>
+<body class="body">
+<div th:replace="fragments/gnb::navi"></div>
+<div layout:fragment="content"></div>
+
+</body>
+</html>

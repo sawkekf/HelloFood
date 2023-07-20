@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="refrigerator_0615/build/generated/sources/annotationProcessor/java/main"/>
+	<classpathentry kind="src" path="refrigerator_0615/src/main/java"/>
+	<classpathentry kind="src" path="refrigerator_0615/src/test/java"/>
+	<classpathentry kind="lib" path="refrigerator_0615/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="refrigerator_0615/bin/main"/>
+</classpath>

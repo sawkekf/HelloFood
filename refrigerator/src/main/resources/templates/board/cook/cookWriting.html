@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/cookWriting}">
+<div layout:fragment="content">
+<form th:action="@{/cookBoard/doCookWriting}" method="post" enctype="multipart/form-data" th:object="${cookWritingDTO}" id="form">
+<h1>요리자랑</h1>
+
+<div class="inputContainer">
+	<div>
+	<input type="text" id="title" name ="title" placeholder="제목을 입력해주세요" maxlength="20">
+	</div>
+	<textarea rows="30px" cols="100px" id="content"></textarea>
+</div>
+
+<div class="inputFileContainer">
+		<input type="file" id="image1" name="images" onchange="sendImage()" class="imgCount1">
+		<label for="image1" class="label1 label">이미지 등록</label>
+</div>
+<div>
+
+<div id="footContainer">
+<button type="button" onclick="addContent()" class="writeButton">등록</button>
+<button type="button" onclick="history.back()" class="cancleButton">취소</button>
+</div>
+
+</div>
+<input type="hidden" id="noticeCheck" name="noticeCheck" value="N"/>
+<input type="hidden" id="contents" name="content"/>
+</form>
+<div style="height: 100px;">
+    
+</div>
+</div>
+</html>

@@ -1,0 +1,360 @@
+@font-face {
+    font-family: 'GoryeongStrawberry';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/GoryeongStrawberry.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TTWanjudaedunsancheB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+.backs{
+    background: none;
+    border: none;
+    position: relative;
+    font-size: 39px;
+    top: -77px;
+    left: 13px;
+}
+.arrow_box {
+    display: none;
+    position: absolute;
+    width: 142px;
+    padding: 8px;
+    left: 132px;
+    top: 676px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+.arrow_box:after {
+    position: absolute;
+    bottom: -45%;
+    left: 13%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333;
+    border-width: 10px;
+    pointer-events: none;
+    content: ' ';
+    transform: scaleY(-1);
+}
+
+.explain:hover + p.arrow_box {
+    display: block;
+}
+.arrow_box2 {
+    display: none;
+    position: absolute;
+    width: 153px;
+    padding: 8px;
+    left: 187px;
+    top: 676px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+.arrow_box2:after {
+    position: absolute;
+    bottom: -45%;
+    left: 13%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333;
+    border-width: 10px;
+    pointer-events: none;
+    content: ' ';
+    transform: scaleY(-1);
+}
+.explain{
+    display: inline-block;
+    padding: 4px 0px;
+    height: 37px;
+    width: 49px;
+    margin-right: 10px;
+    background: rgb(160, 217, 160);
+    border-radius: 17px;
+    border: 1px dashed rgb(5, 130, 64);
+    position: absolute;
+    left: 117px;
+    top: 735px;
+}
+.explain2{
+    display: inline-block;
+    padding: 4px 0px;
+    height: 34px;
+    width: 34px;
+    margin-right: 10px;
+    background: none;
+    border-radius: 17px;
+    border: none;
+    position: absolute;
+    left: 184px;
+    top: 732px;
+}
+.explain2:hover + p.arrow_box2 {
+    display: block;
+}
+.recipeInput{
+    position: relative;
+    top: -64px;
+    width: 153px;
+    left: 1064px;
+    border: 1px solid #ccc;
+    background: #fbfbfb;
+    height: 18px;
+    padding: 4px 0px 4px 12px;
+    border-radius: 7px;
+}
+.norecipe{
+
+    display: inline-block;
+    position: relative;
+    top: 230px;
+    left: 369px;
+    font-size: 61px;
+
+}
+.recspan{
+
+
+
+    height: 500px;
+    overflow-y: auto;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: row;
+    text-align: center;
+    grid-row-gap: 14px;
+
+
+}
+.my_ref_style{
+    max-width: 300px;
+    padding-right: 8px;
+    padding-left: 8px;
+    min-width: 300px;
+    border: 1px;
+    border-right: 1px solid;
+}
+.recipeTables{
+    display: block;
+    text-align: left;
+    padding-left: 8%;
+ font-size: 19px;
+}
+.recipeTables2{
+    display: inline-block;
+    text-align: left;
+    padding-left: 2%;
+    font-size: 19px;
+    margin-right: 20px;
+}
+
+.spants{
+
+
+font-size: 16px;
+}
+.tdcss{
+    text-align: left;
+    width: 25%;
+    position: relative;
+    left: 5%;
+}
+.tdcss2{
+    text-align: center;
+    width: 25%;
+    position: relative;
+
+}
+
+.tdsize{
+    padding-top: 1%;
+    text-align: left;
+    position: relative;
+    padding-bottom: 1%;
+}
+.rec_ing{
+    margin: 0px 30px;
+}
+#rcp_part{
+margin-bottom: 20px;
+font-size: 19px;
+font-weight: bold;
+}
+.pre{
+width: 93%;
+text-wrap: wrap;
+font-size: 19px;
+    font-size: 19px;
+    display: block;
+
+
+    letter-spacing: 1px;
+
+    line-height: 40px;
+}
+.ingSmall{
+font-weight: bold;
+}
+.backbtn{
+background: none;
+cursor: pointer;
+border-radius: 50%;
+color: whitesmoke;
+font-size: 30px;
+width: 48px;
+height: 48px;
+border: 3px solid whitesmoke;
+position: absolute;
+left: -48%;
+bottom: 45%;
+}
+.backbtns{
+    background: none;
+    cursor: pointer;
+    border-radius: 50%;
+    color: whitesmoke;
+    font-size: 30px;
+    width: 48px;
+    height: 48px;
+    border: 3px solid whitesmoke;
+    position: absolute;
+    left: 96%;
+    bottom: 45%;
+    display: none;
+}
+.finishCook2{
+    padding: 9px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 15px;
+    height: 42px;
+    width: 159px;
+    position: absolute;
+    font-style: normal;
+    left: 879px;
+    bottom: 50px;
+    font-family: 'Do Hyeon';
+    font-weight: bold;
+}
+.finishCook{
+    padding: 9px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 15px;
+    height: 42px;
+    width: 159px;
+    position: absolute;
+    font-style: normal;
+    left: 879px;
+    bottom: 62px;
+    font-family: 'Do Hyeon';
+    font-weight: bold;
+}
+.recipeVList{
+display: flex;
+flex-wrap: wrap;
+overflow-y: auto;
+margin: 20px 20px 0px;
+height: 527px;
+}
+.recipeBList{
+width: 90%;
+margin: 0 auto;
+height: 548px;
+overflow-y: auto;
+}
+.finishDetail{
+    text-align: left;
+    display: none;
+    margin-left: 630px;
+    height: 516px;
+    overflow-y: auto;
+}
+.finishVlog{
+    display: none;
+}
+.finishVideo{
+    display: none;
+}
+.detailRecipe{
+background:none;
+border:none;
+cursor:pointer;
+font-family: 'TTWanjudaedunsancheB';
+font-size: 15px;
+}
+.img{
+    width: 50px;
+    height: 50px;
+    border-radius: 76px;
+    border: solid 1px black;
+    background: white;
+    position: relative;
+    left: 154%;
+}
+.spansmall{
+    font-size: 33px;
+    position: relative;
+    top: -19px;
+    left: 120px;
+    width: 260px;
+    display: inline-block;
+}
+.inglist{
+    height: 665px;
+    overflow-y: auto;
+}
+.finish{
+    padding: 9px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 20px;
+    height: 42px;
+    width: 159px;
+    position: absolute;
+    font-style: normal;
+    left: 889px;
+    bottom: 61px;
+    font-family: 'Do Hyeon';
+    font-weight: bold;
+}
+.rec_ing2 {
+    margin: 0px 23px;
+}
+.deleteIng{
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 15px;
+    height: 40px;
+    width: 364%;
+    position: relative;
+    font-style: normal;
+    margin-top: -18%;
+    top: -24px;
+    left: 264%;
+}

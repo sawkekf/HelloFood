@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/recipeWriting}">
+<div layout:fragment="content" class="main">
+	<form th:action="@{/recipeBoard/doRecipeWrite}" th:object="${writeFormDto}" method="post" enctype="multipart/form-data" id="form">
+
+		<h1>레시피 작성</h1>
+		<div class="headerContainer">
+			<label style="    margin-left: 8px;    margin-left: 20px;">레시피  제목</label>
+			<input type="text" name="title" id="title" placeholder="레시피 명을 입력하세요" maxlength="20">
+			<div>
+				<label style="    margin-left: 8px;    margin-left: 20px;">요리 난이도</label>
+				<select name="difficulty" id="difficulty">
+					<option value="상">상</option>
+					<option value="중">중</option>
+					<option value="하">하</option>
+				</select>
+			</div>
+			<div id="capImageBox">
+				<div id="capImage">
+					<label class="label2" for="Image0">대표 이미지</label>
+					<input type="file" name="recipeImages" id="Image0" onchange="plusTemporal(this.id)">
+				</div>
+			</div>
+			<div id="kcalContainer">
+				<label style="    margin-left: 20px;    margin-left: 8px;    margin-left: 20px;    margin-right: 37px;">칼로리</label>
+				<input type="number" name="kcal" id="kcal" placeholder="칼로리를 입력해주세요">
+			</div>
+			<div id="recipeIngrediant">
+				<label style="    /* margin-left: 8px; */    margin-right: 16px;    position: relative;    left: -107px;">재료 등록</label>
+				<button type="button" onclick="addIngrediant()" id="addIngButton" style="    display: inline-block;    margin-right: 441px;    position: relative;    left: -87px;">재료 추가                </button>
+				<div id="ing1box" class="ingBox"><input type="text" name="ingrediant" id="ing${ingCount+1}" placeholder="재료입력"><input type="text" name="ingrediantVol" id="ing1vol" placeholder="용량입력"><button type="button" class="ingCancle" value="ing1" onclick="delIng(this.value)">x</button></div></div>
+		</div>
+
+		<div id="contentContainer">
+			<div id="stepTitle">
+				요리 순서
+			</div>
+			<div class="contents"><div class="content"><span class="step">step.01</span><textarea id="content1" name="recipeContent" rows="5" cols="100" class="textArea"></textarea><div class="imgBox"><label class="label" for="Image1">이미지 추가</label><input type="file" name="recipeImages" id="Image1"  onchange="plusTemporal(this.id)"/></div></div></div>
+			<div id="plusAndMinus"><button type="button" class="plusAndminus" onclick="plus()">레시피 내용 추가</button><button type="button" class="plusAndminus" onclick="del()">레시피 내용 삭제</button></div>
+			<div id="tipContainer"><label id="tip">요리팁</label><textarea rows="5" cols="150" name="cookTip" style="width: 976px; margin-left: 94px;"></textarea></div>
+		</div>
+
+		<div id="footContainer">
+			<input type="button" class="writeButton" onclick="checkContent()" value="등록"> <input type="button" class="cancleButton" onclick="history.back()" value="취소">
+			<input type="hidden" id="noticeCheck" name="noticeCheck" value="N"/>
+		</div>
+	</form>
+	<div style="height: 100px;">
+    
+</div>
+</div>
+</html>

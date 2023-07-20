@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/notifiedList}">
+
+<div layout:fragment="content">
+
+<div class="notifiedContainer">
+	<h1>신고자 관리</h1>
+	<table class="notifiedTable" cellspacing="20px">
+		<tr style="text-align: center;" class="notifiedColumn">
+			<td width="100px">신고번호</td>
+			<td width="250px;">신고자</td>
+			<td width="250px">피신고자</td>
+			<td width="280px">내용</td>
+			<td width="150px">신고일시</td>
+			<td width="150px">처리일시</td>
+			<td width="50px">유형</td>
+			<td width="100px;">처리상태</td>
+		</tr>
+		<tr th:each="notify, i:${notifies}" style="text-align: center;">
+			<td th:text="${notify.notifiedNum}"></td>
+			<td th:text="${notify.member.nickname}+'('+${notify.member.email}+')'" th:class="'notify'+${i.count}+'member fromMember'"></td>
+			<td th:text="${notify.notifiedMember}" th:class="'notify'+${i.count}+'notifiedMember toMember'"></td>
+			<td th:text="${notify.title.length()<20 ? notify.title : #strings.substring(notify.title,0,20)+'...'}" th:value="${notify.title}" th:class="'notify'+${i.count}+'title notifiedTitle'" style="display: none"> 
+			<td th:text="${notify.notifiedContent.length()<20 ? notify.notifiedContent : #strings.substring(notify.notifiedContent,0,20)+'...'}" th:value="${notify.notifiedContent}" th:class="'notify'+${i.count}+'notifiedContent'" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+			<td th:text="${#temporals.format(notify.regDate,'yyyy-MM-dd HH:mm')}"></td>
+			<td th:text="${#temporals.format(notify.didDate,'yyyy-MM-dd HH:mm')==null?'----' : #temporals.format(notify.didDate,'yyyy-MM-dd HH:mm')}"></td>
+			<td th:text="${notify.notifiedCase}" th:class="'notify'+${i.count}+'notifiedCase'"></td>
+			<td align="center"><div th:if="${notify.did=='Y'}" class="afterBann">처리</div><button th:if="${notify.did=='N'}" onclick="bannedAndDelete(this.value)" th:value="'notify'+${i.count}" class="letSBann">미처리</button></td>
+			<td th:text="${notify.writingId}" th:class="'writingId notify'+${i.count}+'writingId'"></td>
+			<td th:text="${notify.commentId}" th:class="'commentId notify'+${i.count}+'commentId'"></td>
+			<td th:text="${notify.boardId}" th:class="'boardId notify'+${i.count}+'boardId'"></td>
+			<td th:text="${notify.notifiedReason}" th:class="'notifiedReason notify'+${i.count}+'notifiedReason'"></td>
+		</tr>
+	</table>
+	
+	<div th:with="start=${(notifies.number/maxPage)*maxPage + 1}, end=(${(notifies.totalPages == 0) ? 1 : (start + (maxPage - 1) < notifies.totalPages ? start + (maxPage - 1) : notifies.totalPages)})"  class="NTListBtn">
+    <ul class="pagination justify-content-center">
+    
+    <li class="page-item" th:classappend="${notifies.number eq 0}?'disabled':''">
+	       		 <a th:href="@{'/admin/NotifiedList/' +'?page=' + ${(notifies.number-1)>-1? notifies.number-1:0}}" aria-label='Previous' class="page-link">
+	        	  <span aria-hidden='true'><</span>
+	        </a>
+	      </li>
+    
+    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${notifies.number eq page-1}?'active':''">
+        <a th:inline="text" th:href="@{'/admin/NotifiedList/' +'?page=' + ${page-1}}" class="page-link">[[${page}]]</a>
+      </li>
+      
+      <li class="page-item" th:classappend="${notifies.number+1 ge notifies.totalPages}?'disabled':''">
+       			 <a th:href="@{'/admin/NotifiedList/' +'?page=' + ${(notifies.number+1)==(notifies.totalPages)? notifies.totalPages-1 : notifies.number+1 }}" aria-label='Next' class="page-link">
+         		 <span aria-hidden='true'>></span>
+        </a>
+      </li>
+      
+      
+    </ul>
+	</div>
+	<div class="foot"></div>
+	
+	<form method="post" th:action="@{/admin/notifyingCheck}" th:object="${notifyingCheckDTO}" target="checkNotified" id="notifying" style="display: none;">
+		<input type="hidden" name="member" id="member"/>
+		<input type="hidden" name="notifiedMember" id="notifiedMember"/>
+		<input type="hidden" name="title" id="title"/>
+		<input type="hidden" name="content" id="content"/>
+		<input type="hidden" name="notifiedCase" id="notifiedCase"/>
+		<input type="hidden" name="notifiedReason" id="notifiedReason"/>
+		<input type="hidden" name="boardId" id="boardId"/>
+		<input type="hidden" name="writingId" id="writingId"/>
+		<input type="hidden" name="commentId" id="commentId"/>
+	</form>
+	
+</div>
+</div>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/recipeRewriting}">
+
+<div layout:fragment="content">
+	<form th:action="@{'/recipeBoard/doRecipeReWrite'}" th:object="${writeFormDto}" method="post" enctype="multipart/form-data" id="form">
+		<h1>레시피 수정</h1>
+		<div class="headerContainer">
+			<label style="    margin-left: 8px;    margin-left: 20px;">레시피  제목</label>
+			<input type="text" name="title" id="title" placeholder="제목" th:value="${rewriteDTO.recipeBoard.title}" maxlength="20"/>
+
+			<div>
+				<label style="    margin-left: 8px;    margin-left: 20px;">요리 난이도</label>
+				<select name="difficulty" id="difficulty">
+					<option value="상" th:selected="${rewriteDTO.recipeBoard.difficulty.toString()}==상">상</option>
+					<option value="중" th:selected="${rewriteDTO.recipeBoard.difficulty.toString()}==중">중</option>
+					<option value="하" th:selected="${rewriteDTO.recipeBoard.difficulty.toString()}==하">하</option>
+				</select>
+			</div>
+			<div id="con0">
+				<div th:if="${rewriteDTO.recipeImage.url.toString}!=''" class="repimgBox">
+					<img th:src="${rewriteDTO.recipeImage.url}" class="imgcon0 imgcon"/>
+				</div>
+				<div th:if="${rewriteDTO.recipeImage.url.toString}==''" class="imgBox2">
+					<label class="label2" for="Image0">대표 이미지</label>
+					<input type="file" name="recipeImages" Id="Image0" onchange="plusTemporal(this.id)"/>
+				</div>
+				<button type="button" class="cancleBtn" th:if="${rewriteDTO.recipeImage.url.toString}!=''" onclick="changeImage(this.value)" th:value="imgcon0">x</button>
+				<input type="file" th:if="${rewriteDTO.recipeImage.url.toString}!=''" style="display: none" th:class="imgcon0" name="recipeImages">
+				<input type="hidden" th:class="imgcon0delcheck" name="imgdelCheck" value="N">
+			</div>
+			<div id="kcalContainer">
+				<label style="    margin-left: 20px;    margin-left: 8px;    margin-left: 20px;    margin-right: 37px;">칼로리</label>
+				<input type="text" name="kcal" id="kcal" placeholder="0" th:value="${rewriteDTO.recipeBoard.kcal}"/>
+			</div>
+			<div id="recipeIngrediant">
+				<label style="    /* margin-left: 8px; */    margin-right: 16px;    position: relative;    left: -107px;">재료 등록</label>
+				<button type="button" onclick="addIngrediant()" id="addIngButton">재료입력</button>
+				<div th:each="recipeIngredient, i:${rewriteDTO.recipeIngredients}" th:id="'ing'+${i.count}+'box'" class="ingBox">
+				<input type="text" th:value="${recipeIngredient.ingrediant}" name="ingrediant"><input type="text" th:value="${recipeIngredient.ingrediantVol}" name="ingrediantVol">
+				<button type="button" th:value="'ing'+${i.count}" onclick="delIng(this.value)">x</button>
+				</div>
+			</div>
+		</div>
+		<div id="contentContainer">
+			<div id="stepTitle">
+				요리 순서
+			</div>
+			<div class="contents" id="contents">
+				<div class="content" th:each="recipeContent,i : ${rewriteDTO.recipeContents}">
+					<div th:id="'con'+${i.count}"><span class="step" th:text="'step.'+${i.count<10? '0'+i.count:i.count}+' '"></span><textarea th:id="'content'+${i.count}" name="recipeContent" rows="5" cols="100" class="textArea" >[[${recipeContent.content}]]</textarea>
+						<div th:if="${recipeContent.url.toString}!=''" class="imgBox">
+							<img th:src="${recipeContent.url}" th:class="'imgcon'+${i.count}+' imgcontent'">						
+						</div>
+						<button type="button" th:if="${recipeContent.url.toString}!=''" onclick="changeImage(this.value)" th:value="'imgcon'+${i.count}" style="margin-left: 1px;">x</button>
+						<input type="file" th:if="${recipeContent.url.toString}!=''" style="display: none" th:class="'imgcon'+${i.count}" name="recipeImages">
+						<div th:if="${recipeContent.url.toString}==''" class="imgBox">
+							<label class="label" th:for="'Image'+${i.count}">이미지 추가</label>
+							<input type="file" name="recipeImages" th:id="'Image'+${i.count}" onchange="plusTemporal(this.id)"/>
+						</div>
+					</div>
+					<input type="hidden" th:class="'imgcon'+${i.count}+delcheck" name="imgdelCheck" value="N">
+					<input type="hidden" id="contentId" th:value="${recipeContent.contentid}">
+				</div>
+			</div>
+			<div id="plusContents">
+			</div>
+			<div id="delCon">
+				<input type="hidden" name="delCon">
+			</div>
+			<div id="plusAndMinus"><button type="button" onclick="plus()" class="plusAndminus">레시피 내용 추가</button><button type="button" onclick="del()" class="plusAndminus">레시피 내용 삭제</button></div>
+			<div id="tipContainer"><label id="tip">요리팁</label><textarea rows="5" cols="150" name="cookTip" style="width: 976px; margin-left: 94px;">[[${rewriteDTO.recipeBoard.cooktip}]]</textarea></div>
+		</div>
+
+
+		<div id="footContainer">
+			<input type="button" class="writeButton" onclick="checkContent()" value="등록"> <input type="button" class="cancleButton" onclick="location.href='/recipeBoard/';" value="취소">
+			<input type="hidden" id="noticeCheck" name="noticeCheck" value="N"/>
+			<input type="hidden" name="writingId" th:value="${rewriteDTO.recipeBoard.writingid}">
+		</div>
+	</form>
+	<div style="height: 100px;">
+    
+</div>
+</div>
+</html>

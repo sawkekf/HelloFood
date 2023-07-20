@@ -1,0 +1,222 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.0)), url('../../img/mainpage.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container {
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+}
+
+.col {
+    width: 50%;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+/*form recipe.css*/
+.form {
+    padding: 1rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 3px 1px;
+
+    background-color: rgba(255, 255, 255, 0.3);
+    position: relative;
+    top: 115px;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 28rem;
+    position: relative;
+}
+
+.container.upscale .form.upscale {
+    transform: scale(1);
+}
+
+/*button recipe.css*/
+.button-search {
+    box-shadow: 0 0 40px 40px transparent inset, 0 0 0 0 transparent;
+    border-radius: 50%;
+
+    position: absolute;
+    top: 18%;
+    right: 5%;
+    width: 12%;
+    height: 65%;
+    padding-right: 0.5rem;
+    color: white;
+    transition: all 150ms ease-in-out;
+
+    text-align: center;
+}
+
+.button-search:hover {
+    box-shadow: 0 0 10px 0 #00AE68 inset, 0 0 10px 4px #00AE68;
+}
+
+.btnImg {
+    transform: translate(15%, 15%);
+}
+
+.button-change {
+    position: relative;
+    width: 80%;
+    transform: translateX(5%);
+    padding: 0;
+    margin: 10px 25px 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 50px;
+    color: #FFF;
+    border-radius: 5px;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btnFloat:before {
+    background: #00AE68;
+    display: block;
+    content: '변경';
+    float: left;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.btnFloat:hover:before {
+    transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+}
+
+.btnFloat2:before {
+    background: #00AE68;
+    display: block;
+    content: '회원가입';
+    float: left;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.btnFloat2:hover:before {
+    transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+}
+
+/*input recipe.css*/
+.align-items-center {
+    display: block;
+    align-items: center;
+    margin: auto;
+    justify-content: center;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    max-width: 28rem;
+}
+
+.input-group input {
+    width: 98%;
+    background: transparent;
+    margin: 5px;
+    padding: 24px 12px 15px;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid gray;
+    outline: none;
+    color: black;
+    font-weight: bold;
+}
+
+.input-group label {
+    position: absolute;
+    top: 35%;
+    left: 0.5rem;
+    font-size: 1rem;
+    color: #888;
+    transition: top 0.2s, font-size 0.2s;
+    pointer-events: none;
+    padding-left: 8px;
+    font-weight: bold;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: 10%;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/*text recipe.css*/
+b {
+    font-size: 15px;
+    display: block;
+    transform: translateX(40%);
+    color: black;
+    font-weight: bold;
+}
+
+.email {
+    font-size: small;
+    text-align: left;
+}
+
+.email-entry {
+    display: block;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 100%;
+}
+.logo {
+    position: absolute;
+    top: 18px;
+    left: 28px;
+    z-index: 7;
+    width: 258px;
+    cursor: pointer;
+}
+.email-wrapper {
+    border: solid 1px gray;
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}

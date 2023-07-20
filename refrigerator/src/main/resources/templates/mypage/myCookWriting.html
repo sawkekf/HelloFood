@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+<title>Insert title here</title>
+  <style>
+  #myCookContainer{
+	margin-top: 20px;
+	margin-bottom : 25px;
+	padding-left: 100px;
+	padding-top: 50px; 
+	width: 1400px;
+	height: 500px;
+
+  }
+  
+  h1{
+  	font-size : 2.5em;
+	font-family: 'Do Hyeon', sans-serif;
+	}
+	
+	.contents{
+		width : 1550px;
+		border-top : 2px solid black;
+		border-top-left-radius : 10px;
+		border-top-right-radius : 10px;
+		border-bottom : 1px solid black;
+		background-color : rgba(255,255,255,0.3);
+		padding-top : 30px;
+		padding-bottom : 10px;
+		margin-bottom: 5px;
+
+}
+.content{
+margin-left : 115px;
+display: inline-block;
+}
+.cookImg {
+height: 150px;
+width: 150px;
+position: relative;
+top : 5px;
+left: 5px;
+}
+
+.imgBack {
+height: 160px;
+width: 160px;
+background-color : white;
+border: 2px solid gray;
+cursor: pointer;
+}
+
+.link{
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+li{
+display: inline-block;
+}
+
+.page-link{
+font-weight: bolder;
+font-size: 20px;
+color: black;
+border: 1px solid black;
+border-radius : 3px;
+background-color :white;
+padding-top : 0px;
+padding-bottom : 2px;
+padding-left: 7px;
+padding-right: 7px;
+margin-left: 5px;
+text-decoration: none;
+}
+
+.pagination{
+
+}
+
+.writingButton{
+margin-top : 20px;
+margin-left: 1150px;
+background-color: coral;
+border: none;
+border-radius : 10px;
+width : 100px;
+height: 40px;
+color: white;
+font-weight: bolder;
+font-size: 16px;
+}
+
+.seen{
+display: inline-block;
+position : relative;
+bottom : 5px;
+font-size: 10px;
+}
+
+.recom{
+display: inline-block;
+position : relative;
+bottom : 5px;
+font-size: 10px;
+}
+
+.nick{
+margin-top : 5px;
+font-size: 11px;
+}
+
+.nonCook{
+    border-top: 2px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 2.0em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: rgba(255,255,255,0.3);
+    width: 1550px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 5px;
+}
+
+.pageButton{
+    position: absolute;
+    margin-top: 10px;
+    text-align: center;
+    width: 88.5%;
+    right: 10%;
+}
+
+</style>
+
+<script th:inline="javascript">
+	function mypageSend(t){
+		window.parent.location.href='/cookBoard/CookBoardDetail?writingId='+t;
+	}
+</script>
+
+</head>
+<body>
+<div id="myCookContainer">
+	<h1>요리자랑 게시판</h1>
+	<div th:if="${nonCookWriting}!=null" class="nonCook">[[${nonCookWriting}]]</div>
+	<div  th:if="${nonCookWriting}==null" class="contents">
+		<div class="content" th:each="cookBoard : ${cookBoards}">
+			
+			<div class="imgBack"><img class="cookImg" th:src="${cookBoard.cookImage.url}" th:onclick="mypageSend([[${cookBoard.writingId}]])" onerror="this.src='/img/noimage.png'; this.style.width='30px'; this.style.height='30px'; this.style.marginTop='-3px';"></div>
+			<div th:onclick="mypageSend([[${cookBoard.writingId}]])" class="link">[[${cookBoard.title}]]</div>
+			<div th:text="${cookBoard.member.nickname}" class="nick"></div>
+			<div th:text="'조회수 '+${cookBoard.seenCount}" class="seen"></div>
+			<div th:text="'추천수 '+${cookBoard.recomCount}" class="recom"></div>
+		
+		</div>
+	</div>
+	
+<div th:with="start=${(cookBoards.number/maxPage)*maxPage + 1}, end=(${(cookBoards.totalPages == 0) ? 1 : (start + (maxPage - 1) < cookBoards.totalPages ? start + (maxPage - 1) : cookBoards.totalPages)})" class="pageButton">
+    <ul class="pagination justify-content-center">
+    
+    <li class="page-item" th:classappend="${cookBoards.number eq 0}?'disabled':''">
+        <a th:href="@{'/mypage/cookwriting' +'?page=' + ${(cookBoards.number-1)>-1? cookBoards.number-1:0}}" aria-label='Previous' class="page-link">
+          <span aria-hidden='true'><</span>
+        </a>
+      </li>
+    
+    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${cookBoards.number eq page-1}?'active':''">
+        <a th:inline="text" th:href="@{'/mypage/cookwriting' +'?page=' + ${page-1}}" class="page-link">[[${page}]]</a>
+      </li>
+    
+    <li class="page-item" th:classappend="${cookBoards.number+1 ge cookBoards.totalPages}?'disabled':''">
+        <a th:href="@{'/mypage/cookwriting' +'?page=' + ${(cookBoards.number+1)==(cookBoards.totalPages)? cookBoards.totalPages-1 : cookBoards.number+1 }}" aria-label='Next' class="page-link">
+          <span aria-hidden='true'>></span>
+        </a>
+        
+      </li>  
+      
+    </ul>
+</div>
+</div>
+</body>
+</html>

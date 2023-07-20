@@ -1,0 +1,1278 @@
+@font-face {
+    font-family: 'GoryeongStrawberry';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/GoryeongStrawberry.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TTWanjudaedunsancheB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+#style-1::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+#ing_selectTag{
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    height: 14px;
+    width: 190px;
+    font-style: normal;
+    margin-left: 42px;
+}
+.dangerspan{
+    font-family: "Do Hyeon", sans-serif;
+    font-size: 13px;
+}
+#Quick{
+    position: absolute;
+    width: 160px;
+    z-index: 5;
+    height: 39px;
+    border-radius: 8px;
+    font-family: "Do Hyeon", sans-serif;
+    border: none;
+    margin-top: 6px;
+    font-size: 14px;
+    top: 112px;
+    left: -3px;
+    background: none;
+
+}
+#Quick::before {
+    background: #ccc;
+    display: block;
+    content: '저장';
+    font-size: large;
+    float: left;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    transition: all 0.2s;
+    color: black;
+    padding-top: 15px;
+}
+
+#Quick:hover:before {
+    transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+}
+
+.textAreass{
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    height: 14px;
+    width: 190px;
+    font-style: normal;
+    margin-left: 26px;
+}
+#ing_deaLine2 {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    height: 14px;
+    width: 190px;
+    margin-left: 26px;
+}
+.allDiv{
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 90%;
+    place-content: flex-start;
+
+}
+
+.selectSpanBig:hover{
+    color : red;
+}
+.spanListBigTag{
+    position: relative;
+    cursor: pointer;
+    top: -4%;
+    text-align: left;
+    margin-left: 4%;
+    font-family: "GoryeongStrawberry";
+}
+.selectSpanBig{
+    margin-right: 1%;
+}
+img{
+
+}
+.ing_btnList{
+    margin-left: 11px;
+    padding: 0px 4px;
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 10px;
+    width: 224px;
+    height: 70px;
+}
+.spanCursor{
+    cursor : pointer;
+}
+.ingli{
+    cursor : pointer;
+}
+.ref_btn {
+    background: none;
+    border: none;
+    border-radius: 55%;
+    cursor: pointer;
+}
+button:hover{
+    cursor: pointer;
+}
+h2 { padding:20px 0; }
+body {  }
+
+.di_btn{
+
+    margin: 5px 10px;
+
+}
+
+#overlay { width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    position:fixed;
+    top:0; left:0;
+    z-index:2;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.5s ease;
+}
+
+#overlay2{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    position:fixed;
+    top:0; left:0;
+    z-index:1;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.5s ease;
+    z-index:3;
+}
+#overlay3{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    position:fixed;
+    top:0; left:0;
+    z-index:1;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.5s ease;
+    z-index:3;
+}
+.modal3::-webkit-scrollbar{
+    display: none;
+}
+#overlay4{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    position:fixed;
+    top:0; left:0;
+    z-index:1;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.5s ease;
+    z-index:3;
+}
+.createTag{
+    position: absolute;
+    width: 160px;
+    z-index: 5;
+    height: 40px;
+    border-radius: 8px;
+    font-family: "Do Hyeon", sans-serif;
+    color: #1e6b7b;
+    border: none;
+    margin-top: 6px;
+    font-size: 15px;
+    top: 115px;
+    left: 156px;
+    background: none;
+}
+.createTag::before {
+    background: #ccc;
+    display: block;
+    word-break: keep-all;
+    content: '재료 목록에 새로운 재료 추가';
+    float: left;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    transition: all 0.2s;
+    color: black;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    position: relative;
+    bottom: 3px;
+}
+
+.createTag:hover:before {
+    transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+}
+#overlay5{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    position:fixed;
+    top:0; left:0;
+    z-index:6;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.5s ease;
+    z-index:3;
+}
+.modal {
+    width: 550px;
+    background: white;
+    border-radius: 23px;
+    position: inherit;
+    height: 700px;
+    top: 88px;
+    right: 66px;
+    overflow: auto;
+    z-index: 2;
+}
+.modal::-webkit-scrollbar{
+    display: none;
+}
+
+.inputsingre{
+    top: -5%;
+    position: relative;
+    display: block;
+    background: white;
+}
+
+
+.modal2 {
+
+    z-index: 3;
+    position: inherit;
+    top: 25%;
+    width: 32%;
+    left: 33%;
+    border-radius: 21px;
+    background: #c3c3c3;
+}
+.modal5 {
+    z-index: 7;
+    position: inherit;
+    top: 25%;
+    width: 27%;
+    left: 36%;
+    border-radius: 21px;
+    background: #c3c3c3;
+}
+.modal_content2{
+    width: 100%;
+    background: #fefefe;
+    border: 1px solid #888;
+    box-sizing: border-box;
+    height: 200px;
+    display: block;
+    position: relative;
+    height: 20em;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.modal_content5{
+    width: 100%;
+    background: #fefefe;
+    border: 1px solid #888;
+    box-sizing: border-box;
+    height: 200px;
+    display: block;
+    position: relative;
+    height: 20em;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+
+
+.modal4{
+
+    /* background: #c3c3c3; */
+    border-radius: 17px;
+    z-index: 3;
+    top: 25%;
+    width: 627px;
+    position: fixed;
+    margin: auto;
+    right: 0;
+    left: 0;
+    overflow: auto;
+}
+.ing_content4{
+    overflow-y: scroll;
+    height: 250px;
+}
+.modal_content4{
+    width: 614px;
+    background: #fefefe;
+    border: 1px solid #888;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    height: 20em;
+    border-bottom-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    /* padding: 17px 0px 0px 0px; */
+    /* text-align: left; */
+    padding: 17px 0px 0px 0px;
+    text-align: left;
+}
+.di_btn{
+    display: inline-block;
+}
+.modal_content2 input{
+    width: 30%;
+    height: 50%;
+    display: inline-block;
+    text-align: center;
+    margin-top: 2%;
+    position: relative;
+}
+.modal_content3{
+
+    background: #fefefe;
+    border: 1px solid #888;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 700px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    width: 1402px;
+}
+.modal3 {
+    background: #c3c3c3;
+    z-index: 3;
+    position: inherit;
+    top: 5%;
+    width: 1402px;
+    left: 14%;
+    height: 798px;
+    border-radius: 60px;
+    overflow: auto;
+
+
+}
+.textfamily{
+    font-family: 'TTWanjudaedunsancheB';
+}
+.Ing_saveIng{
+    width: 34%;
+    height: 15%;
+
+    display: inline-block;
+
+    position: relative;
+    margin: 4% 0%   0% 27%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    font-style: normal;
+}
+.modal_header2 { width:100%; position:relative; }
+.modal_header2 h3 {
+
+    color:#333;
+    top: -16%;
+    padding: 1% 0%;
+    position: relative;}
+.modal_header3 {    width: 1386px;
+    position: relative;
+    height: 8%; }
+.modal_header3 h3 {     width: 100%;
+    position: relative;
+    top: -4%;
+    font-family: 'TTWanjudaedunsancheB';
+    /* top: 19%; */
+    /* margin: -1px 0px; */
+    height: 12%;
+    font-size: 34px;
+}
+.modal_header4{
+    background: #c3c3c3;
+    height: 51px;
+    padding: 6px 0px 7px 0px;
+    border-top-right-radius: 17px;
+    border-top-left-radius: 17px;
+    width: 614px;
+}
+.modal_header {
+    width: 100%;
+    position: relative;
+    background: #c3c3c3;
+    top: -32px;
+}
+.modal_header h3{
+    padding: 27px 0 23px 0;
+    color: #333;
+    font-size: 34px;
+    margin: 25px 0px;
+    font-family: 'TTWanjudaedunsancheB';
+}
+
+.modal_content {
+    height: 66%;
+    background: #fefefe;
+    box-sizing: border-box;
+    position: relative;
+    top: -3%;
+    padding: 0% 3%;
+}
+. {
+    display: grid;
+    row-gap: 2%;
+    column-gap: 2%;
+    padding: 2%;
+}
+.selectTag {
+    top: 3%;
+    position: relative;
+}
+
+
+.close {     position: absolute;
+    top: 1px;
+    left: 92%;
+    margin-left: 0%;
+    font-size: 38px;
+    color: #aaa;
+    font-weight: bold;
+}
+.close:hover, .close:focus {
+    color:#000;
+    cursor:pointer;
+}
+.close2 { position:absolute;
+    color:#aaa;
+    font-weight:bold;
+    top: -24px;
+    right: 15px;
+    font-size: 37px;
+}
+.close2:hover, .close2:focus {
+    color:#000;
+    cursor:pointer;
+}
+.close5 {
+    position: absolute;
+    color: #aaa;
+    font-weight: bold;
+    top: -8px;
+    right: 12px;
+    font-size: 37px;
+}
+.close5:hover, .close2:focus {
+    color:#000;
+    cursor:pointer;
+}
+.close4 { position:absolute;
+    top:10px; right:20px;
+    font-size:28px;
+    color:#aaa;
+    font-weight:bold;   }
+.close4:hover, .close4:focus {
+    color:#000;
+    cursor:pointer;
+}
+
+.close3 {
+    position: relative;
+    top: -82px;
+    left: 96%;
+    font-size: 28px;
+    color: #aaa;
+    font-weight: bold;
+    font-size: 50px;
+}
+.close3:hover, .close3:focus {
+    color:#000;
+    cursor:pointer;
+}
+.ingSpan{
+    font-family: 'TTWanjudaedunsancheB';
+    position: relative;
+
+}
+
+@keyframes blink-effect {
+    0%{
+        background-color: red;
+    }
+    50%{
+        background-color: white;
+    }
+}
+
+.blink{
+    animation : blink-effect 1s step-end infinite;
+
+
+}
+.smallTag_placestr{
+    top: 6%;
+    position: relative;
+    max-height: 360px;
+    overflow-y: auto;
+    width: 83%;
+    margin-left: 20px;
+}
+.Ing_delete{
+    display:inline;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    margin-left: 12px;
+    font-style: normal;
+}
+
+.ing_inserting {
+    position: relative;
+    width: 29%;
+    padding: 0;
+    margin: 10px 25px 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 50px;
+    color: #FFF;
+    border-radius: 5px;
+    transition: all 0.2s;
+    border: none;
+    z-index: 1;
+    left: 166px;
+    top: -17px;
+}
+
+.ing_inserting::before {
+    background: #ccc;
+    display: block;
+    content: '재료등록';
+    font-size: large;
+    float: left;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    transition: all 0.2s;
+    color: black;
+}
+
+.ing_inserting:hover:before {
+    transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+}
+
+
+
+
+.detailSave{
+
+    position: relative;
+    top: 77.5%;
+    width: 9%;
+    right: -48%;
+    z-index: 5;
+    height: 34px;
+    border-radius: 8px;
+    font-family: 'TTWanjudaedunsancheB';
+    color: #184c57;
+    border: solid 1px;
+    text-decoration: none;
+    font-size: 17px;
+
+}
+.ing_selectAll{
+    float: left;
+    margin-left: 3%;
+    position: relative;
+    padding: 4px 15px 6px;
+    line-height: 1;
+    color: #4f4f4f;
+    background: #eee;
+    border-radius: 14px;
+    font-size: 14px;
+    border: none;
+    height: 29px;
+    font-family: 'TTWanjudaedunsancheB';
+}
+.ing_selectAll:hover{
+    color: red;
+}
+
+.Ing_deleteIng{
+    float: left;
+    margin-left: 1%;
+    position: relative;
+
+    padding: 4px 15px 4px;
+    line-height: 1;
+    color: #4f4f4f;
+    background: #eee;
+    border-radius: 14px;
+    font-size: 14px;
+    border: none;
+    height: 29px;
+    font-family: 'TTWanjudaedunsancheB';
+}
+.ing_listDetail{
+
+    float: right;
+
+    position: relative;
+    margin-right: 3%;
+    font-family: 'TTWanjudaedunsancheB';
+    padding: 4px 15px 6px;
+    line-height: 1;
+    color: #4f4f4f;
+    background: #eee;
+    border-radius: 14px;
+    font-size: 14px;
+    border: none;
+    height: 29px;
+}
+.inputsingre::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.ing_sel2{
+    border:1px solid black;
+
+    height: 100%;
+    border-radius: 19px;
+}
+.spn{
+    font-size: 10px;
+    position: relative;
+    top: -2%;
+    left: -33%;
+}
+.ing_selectTag{
+    left: 15px;
+    width: 600px;
+    height: 56px;
+    top: 37px;
+    position: relative;
+    border-radius: 41px;
+    padding: 0px 0px 0px 18px;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: left;
+    margin-right: 55px;
+}
+
+.ing_selectStr{
+    position: relative;
+    top: 5%;
+    display: flex;
+    height: 300px;
+    margin-top: 2%;
+    left: -1%;
+    width: 600px;
+}
+.list-del{
+    cursor: pointer;
+    margin-left: 12px;
+    font-size: 20px;
+}
+.finishVlog{
+    text-align: left;
+    display: block;
+    margin-left: 37%;
+}
+.finishVideo{
+    text-align: left;
+    display: block;
+    margin-left: 37%;
+}
+.Ing_mysel{
+    position: relative;
+    font-size: 13px;
+    margin-right: 5%;
+    margin-left: 3%;
+    font-weight: bold;
+}
+.tagname{
+    margin: 0px 0px 0px 28px;
+    width: 32%;
+    height: 34px;
+    margin-bottom: 5%;
+    margin-top: 3%;
+    position: relative;
+
+    z-index: 5;
+
+    border-radius: 8px;
+    font-family: "paybooc-Light", sans-serif;
+    color: #114753;
+    font-size: 14px;
+    border: solid 1px;
+}
+.myselectTag{
+    width: 34%;
+    height: 15%;
+    display: inline-block;
+    position: relative;
+    margin: 6% 0% 0% 0%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    font-style: normal;
+}
+.ing_div2{
+    font-size: 14px;
+    width: 67px;
+    margin-right: 3px;
+    visibility:hidden;
+    opacity:0;
+}
+.ing_div3{
+    display: flex;
+    flex-grow: 1;
+    width: 364px;
+    left: 7px;
+    position: relative;
+}
+.ing_sel3{
+    height: 100%;
+    margin: 11px 0px 0px 0px;
+    padding: 0px 6px 0px 0px;
+}
+.ing_div4{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2%;
+    flex-basis: 121%;
+    overflow-y: auto;
+    align-content: flex-start;
+    height: 357px;
+}
+.click-btn{
+    margin-bottom: 4%;
+}
+.refSle{
+    width: 200px;
+    left: 52px;
+    position: relative;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid #ccc;
+    background: #fbfbfb;
+    /* line-height: 1.42857143; */
+    height: 18px;
+    padding: 4px 0px 4px 12px;
+    border-radius: 7px;
+}
+.ing_spro{
+    border: solid 1px #dadce0;
+    padding: 0px 11px;
+    height: 39px;
+    border-radius: 8px;
+    color: #2d2d2d;
+    font-size: 14px;
+    margin: 3px 2px;
+}
+.ing_click-btn{
+    border-radius: 500px;
+    border: solid 1px;
+    position: relative;
+    bottom: 15px;
+}
+.ing_div42{
+    top: 600px;
+    left: 180px;
+    position: absolute;
+    text-align: left;
+    width: 314px;
+    z-index: 4;
+    height: 180px;
+}
+.tagsave{
+    width: 49%;
+    height: 15%;
+    display: inline-block;
+    position: relative;
+    margin: 4% 0% 0% 27%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    font-style: normal;
+}
+.inputDetail{
+    position: relative;
+    width: 31%;
+    z-index: 5;
+    height: 29px;
+    border-radius: 8px;
+    font-family: "paybooc-Light", sans-serif;
+    color: #114753;
+    font-size: 14px;
+    border: solid 1px;
+}
+.ingListPlace{
+    text-align: left;
+}
+.ing_Insertlist{
+    position: relative;
+    right: -207px;
+    z-index: 5;
+    height: 39px;
+    font-family: "Do Hyeon", sans-serif;
+    font-size: 19px;
+    top: 15px;
+    border: none;
+    padding: 0;
+}
+.ing_Insertlist::before {
+    background: #ccc;
+    display: block;
+    content: '리스트 저장';
+    font-size: large;
+    width: 300px;
+    height: 36px;
+    border-radius: 5px;
+    transition: all 0.2s;
+    color: black;
+    padding: 7px 0px 0px 0px;
+}
+
+.ing_Insertlist:hover:before {
+    transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+}
+.listBox {
+    border: 1px solid #a3a3a3;
+    height: 560px;
+    border-radius: 26px;
+    width: 620px;
+    left: 10px;
+    position: relative;
+}
+
+.ingName {
+    width: 143px;
+    display: inline-block;
+    font-size: 16px;
+}
+.ingDate{
+	 padding: 8px; 
+	 border-radius: 5px; 
+	 border: 1px solid #ccc; 
+	 background-color: #f2f2f2; 
+	 font-size: 16px; 
+	 height: 15px; 
+	 width: 116px;    
+	 margin-right: 13px;
+}
+.ingText{
+	padding: 8px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #f2f2f2;
+	font-size: 16px;
+	height: 14px;
+	width: 190px;
+	font-style: normal;
+}
+
+.refListDiv{
+	 margin-top: 14px; margin-left: 23px;
+}
+
+@media only screen and (max-width: 1500px) {
+
+    .modal3 {
+        background: #c3c3c3;
+        z-index: 3;
+        position: inherit;
+        top: 2%;
+        width: 700px;
+        left: 14%;
+        height: 660px;
+        /* max-height: 740px; */
+        border-radius: 60px;
+        overflow: hidden;
+    }
+
+    .modal_header3 {
+        width: 700px;
+        position: relative;
+        height: 8%;
+    }
+
+    .close3 {
+        position: relative;
+        top: -83px;
+        left: 625px;
+        font-size: 28px;
+        color: #aaa;
+        font-weight: bold;
+        font-size: 50px;
+    }
+
+    .ing_selectTag {
+        left: 15px;
+        width: 287px;
+        height: 27px;
+        top: 37px;
+        position: relative;
+        border-radius: 41px;
+        padding: 0px 0px 0px 18px;
+        font-weight: bold;
+        font-size: 15px;
+        text-align: left;
+        margin-right: 55px;
+    }
+
+    .ing_div42 {
+        top: 456px;
+        left: 36px;
+        position: absolute;
+        text-align: left;
+        width: 314px;
+        z-index: 4;
+    }
+
+    .ing_div4 {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 2%;
+        flex-basis: 121%;
+        overflow-y: auto;
+        align-content: flex-start;
+        height: 233px;
+    }
+
+    .ing_Insertlist {
+        position: absolute;
+        right: -86px;
+        z-index: 5;
+        height: 39px;
+        font-family: "Do Hyeon", sans-serif;
+        font-size: 19px;
+        top: 170px;
+        border: none;
+        padding: 0;
+    }
+
+    .refList{
+        position: relative;
+        right: 500px;
+    }
+    .textfamily{
+        font-size: 10px;
+        position: relative;
+        right: 15px;
+    }
+
+    .listBox {
+        width: 250px;
+        height: 97px;
+        position: absolute;
+        left: 187px;
+        padding-bottom: 5px;
+        overflow: auto;
+    }
+    
+    .listBox::-webkit-scrollbar{
+    	display: none;
+    }
+
+    .createTag {
+        position: absolute;
+        width: 160px;
+        z-index: 5;
+        height: 40px;
+        border-radius: 8px;
+        font-family: "Do Hyeon", sans-serif;
+        color: #1e6b7b;
+        border: none;
+        margin-top: 6px;
+        font-size: 15px;
+        top: 115px;
+        left: 156px;
+        background: none;
+    }
+
+    .refList {
+        position: absolute;
+        right: 106px;
+        top: 408px;
+    }
+    
+    .ingName {
+   		width: 85px;
+    	display: inline-block;
+    	font-size: 10px;
+	}
+	
+	.ingDate{
+		padding: 8px;
+    	border-radius: 5px;
+    	border: 1px solid #ccc;
+    	background-color: #f2f2f2;
+    	font-size: 11px;
+    	height: 0px;
+    	width: 80px;
+    	margin-right: 13px;
+	}
+	
+	.ingText{
+		padding: 8px;
+    	border-radius: 5px;
+    	border: 1px solid #ccc;
+    	background-color: #f2f2f2;
+    	font-size: 11px;
+    	height: 0px;
+    	width: 172px;
+    	font-style: normal;
+	}
+
+}
+
+@media only screen and (max-height: 800px){
+
+    .modal {
+        width: 550px;
+        background: white;
+        z-index: 2;
+        border-radius: 23px;
+        position: inherit;
+        height: 500px;
+        top: 88px;
+        right: 66px;
+        overflow: auto;
+    }
+
+    .modal_content {
+        height: 241px;
+        background: #fefefe;
+        box-sizing: border-box;
+        position: relative;
+        top: -3%;
+        padding: 0% 3%;
+    }
+
+    .ing_inserting {
+        position: relative;
+        width: 29%;
+        padding: 0;
+        margin: 10px 25px 10px;
+        font-weight: 600;
+        text-align: center;
+        line-height: 50px;
+        color: #FFF;
+        border-radius: 5px;
+        transition: all 0.2s;
+        border: none;
+        z-index: 1;
+        left: 166px;
+        top: -5px;
+    }
+
+    .modal3 {
+        background: #c3c3c3;
+        z-index: 3;
+        position: inherit;
+        top: 2%;
+        width: 700px;
+        left: 14%;
+        height: 660px;
+        /* max-height: 740px; */
+        border-radius: 60px;
+        overflow: hidden;
+    }
+
+    .modal_header3 {
+        width: 700px;
+        position: relative;
+        height: 8%;
+    }
+
+    .close3 {
+        position: relative;
+        top: -83px;
+        left: 625px;
+        font-size: 28px;
+        color: #aaa;
+        font-weight: bold;
+        font-size: 50px;
+    }
+
+    .ing_selectTag {
+        left: 15px;
+        width: 287px;
+        height: 27px;
+        top: 37px;
+        position: relative;
+        border-radius: 41px;
+        padding: 0px 0px 0px 18px;
+        font-weight: bold;
+        font-size: 15px;
+        text-align: left;
+        margin-right: 55px;
+    }
+
+    .ing_div42 {
+        top: 456px;
+        left: 36px;
+        position: absolute;
+        text-align: left;
+        width: 314px;
+        z-index: 4;
+    }
+
+    .ing_div4 {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 2%;
+        flex-basis: 121%;
+        overflow-y: auto;
+        align-content: flex-start;
+        height: 233px;
+    }
+
+    .ing_Insertlist {
+        position: absolute;
+        right: -86px;
+        z-index: 5;
+        height: 39px;
+        font-family: "Do Hyeon", sans-serif;
+        font-size: 19px;
+        top: 170px;
+        border: none;
+        padding: 0;
+    }
+
+    .refList{
+        position: relative;
+        right: 500px;
+    }
+    .textfamily{
+        font-size: 10px;
+        position: relative;
+        right: 15px;
+    }
+
+    .listBox {
+        width: 250px;
+        height: 97px;
+        position: absolute;
+        left: 187px;
+        padding-bottom: 5px;
+        overflow: auto;
+        
+    }
+    
+    .listBox::-webkit-scrollbar{
+    	display: none;
+    }
+
+    .createTag {
+        position: absolute;
+        width: 160px;
+        z-index: 5;
+        height: 40px;
+        border-radius: 8px;
+        font-family: "Do Hyeon", sans-serif;
+        color: #1e6b7b;
+        border: none;
+        margin-top: 6px;
+        font-size: 15px;
+        top: 115px;
+        left: 156px;
+        background: none;
+    }
+
+    .refList {
+        position: absolute;
+        right: 106px;
+        top: 408px;
+    }
+    
+    .ingName {
+    	width: 85px;
+    	display: inline-block;
+    	font-size: 10px;
+	}
+	
+	.ingDate{
+		padding: 8px;
+    	border-radius: 5px;
+    	border: 1px solid #ccc;
+    	background-color: #f2f2f2;
+    	font-size: 11px;
+    	height: 0px;
+    	width: 80px;
+    	margin-right: 13px;
+	}
+	
+	.ingText{
+		padding: 8px;
+    	border-radius: 5px;
+    	border: 1px solid #ccc;
+    	background-color: #f2f2f2;
+    	font-size: 11px;
+    	height: 0px;
+    	width: 172px;
+    	font-style: normal;
+	}
+	
+
+}
+	.ingDeadLine{
+		font-size: 12px;
+        margin-right: 26px;
+	}

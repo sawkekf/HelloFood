@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/css/find/findPW.css" rel="stylesheet" type="text/css" />
+    <title>Sign Up</title>
+</head>
+
+<body>
+<form action="/member/socialCreate" method="post" role="form">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+    <div class="container" id="container">
+        <div class="col align-items-center flex-col">
+            <div class="form-wrapper align-items-center">
+                <div class="form upscale">
+                    <div class="input-group">
+                        <input th:value="${email}" name="email" id="email" placeholder=" " type="text" readonly>
+                        <label for="email">이메일</label>
+                    </div>
+                    <div class="input-group">
+                        <input th:value="${nickname}" name="nickname" id="nickname" placeholder=" " type="text"
+                               oninput="validateNickname()">
+                        <label for="nickname">닉네임</label>
+                        <span id="validNickname"></span>
+                    </div>
+                    <div>
+                        <button class="button-change btnFloat2" id="createSocialBtn"
+                                style="transform: translateX(6%);" type="submit"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/js/find.js"></script>
+<script>
+    let nickComplete = 0;
+
+    $('form').submit(function () {
+        if (nickComplete === 1) {
+            alert("회원가입이 완료되었습니다.");
+            return true;
+        } else {
+            alert("제대로 입력되지 않았습니다.");
+            return false;
+        }
+    });
+
+    //validateNickname Start
+    function validateNickname() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var nickname = $("#nickname").val();
+        var spanNickname = document.getElementById("validNickname")
+        var regex = /^[a-zA-Z가-힣0-9]*$/;
+
+        if (nickname) {
+            $.ajax({
+                url: "/member/nickChk",
+                type: "post",
+                dataType: 'json',
+                data: nickname,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (result) {
+                    if (!regex.test(nickname)) {
+                        spanNickname.innerHTML = "<span style='color:red'>영어, 한글, 숫자만 입력 가능합니다.</span>";
+                        document.getElementById("nickname").style.border = "0.125rem solid red";
+                        nickComplete = 0;
+                    } else {
+                        var dupleNick = result.result;
+                        if (dupleNick == false) {
+                            spanNickname.innerHTML = "<span style='color:red'>중복 닉네임입니다.</span>";
+                            document.getElementById("nickname").style.border = "0.125rem solid red";
+                            nickComplete = 0;
+                        } else if (dupleNick == true) {
+                            spanNickname.innerHTML = "<span style='color:green'>사용가능한 닉네임입니다.</span>";
+                            document.getElementById("nickname").style.border = "0.125rem solid #4EA685";
+                            nickComplete = 1;
+                        }
+                    }
+                }
+            })
+        } else {
+            spanNickname.innerHTML = "";
+            document.getElementById("nickname").style.border = "0.1rem solid gray";
+            nickComplete = 0;
+        }
+    }
+    //validateNickname End
+    // Set focus on email input on page load
+    window.onload = function() {
+        validateNickname(); // Validate nickname on page load
+    };
+</script>
+</body>
+
+
+</html>

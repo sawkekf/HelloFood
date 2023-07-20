@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/css/find/findPW.css" rel="stylesheet" type="text/css"/>
+    <title>Find Email</title>
+</head>
+
+<body>
+<img th:src="@{/img/logo_black.png}" onclick="location.href='/';" class="logo"/>
+<div class="container" id="container">
+    <div class="col align-items-center flex-col">
+        <div class="form-wrapper align-items-center">
+            <div class="form upscale">
+                <div class="input-group">
+                    <input id="name" placeholder=" ">
+                    <label for="name">이름</label>
+                </div>
+                <div class="input-group">
+                    <input id="phoneNum" placeholder=" ">
+                    <label for="phoneNum">핸드폰 번호('-'없이 입력)</label>
+                    <a class="button-search" id="sendPhoneBtn" type="button">
+                        <img alt="이미지" class="btnImg" th:src="@{/img/find/search.png}">
+                    </a>
+                </div>
+                <div class="input-group" id="noneCheckNum">
+                    <input id="authCode" placeholder=" ">
+                    <label for="authCode">인증번호</label>
+                    <a class="button-search" id="confirmBtn" type="button">
+                        <img alt="이미지" class="btnImg" th:src="@{/img/find/check.png}">
+                    </a>
+                </div>
+                <div>
+                    <span id="spanFindEmail"></span>
+                </div>
+                <div style="display: flex;">
+                    <b onclick="location.href='/member/login'" style="cursor: pointer;">로그인</b>
+                    <b onclick="location.href='/member/findPW'" style="cursor: pointer;">비밀번호 찾기</b>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function checkPhone(str) {
+        let pattern = /^010\d{8}$/; // 010으로 시작하는 10자리 또는 11자리 숫자 패턴 정의
+
+        return pattern.test(str);
+    }
+
+    $('#sendPhoneBtn').click(function () {
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        let phoneNum = $('#phoneNum').val();
+        let name = $('#name').val();
+
+        if (checkPhone(phoneNum)) {
+            $.ajax({
+                url: "/member/findEmailCheck",
+                type: "post",
+                data: {
+                    name,
+                    phoneNum
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    alert("인증번호 발송")
+                    console.log("data : " + data);
+                    check(data);
+                },
+                error: function (request, status, error) {
+                    alert("입력하신 정보와 일치하는 이메일이 없습니다.");
+                    console.log(error);
+                }
+            })
+        }
+    })
+
+    function check(data) {
+        let authCode = document.getElementById("authCode")
+        let auth = data.split("/")[0];
+        let email = data.split("/")[1].split(",");
+        let confirmBtn = document.getElementById("confirmBtn");
+
+        $('#confirmBtn').off('click').on('click', function () {
+            if (authCode.value === auth) {
+                let emailHtml = '';
+                emailHtml += '<span class="email">고객님의 정보와 일치하는 아이디 목록입니다. </span>';
+                emailHtml += '<br>';
+                emailHtml += '<div class="email-wrapper">';
+                for (let i = 0; i < email.length; i++) {
+                    emailHtml += '<span class="email-entry">' + email[i].trim() + '</span>';
+                }
+                emailHtml = emailHtml.replace("[", "").replace("]", "");
+                emailHtml += '</div>';
+                $('#spanFindEmail').html(emailHtml);
+
+                authCode.readOnly = true;
+                confirmBtn.disabled = true;
+                data = '';
+            } else {
+                alert("불일치! 다시 확인해주세요");
+                data = '';
+            }
+        })
+    }
+</script>
+<script src="/js/find.js"></script>
+</body>
+
+
+</html>

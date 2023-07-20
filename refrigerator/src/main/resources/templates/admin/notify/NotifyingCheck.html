@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<link th:href="@{/css/notifying.css}" type="text/css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+		function bannedAndDelete(){
+			var token=$("meta[name='_csrf']").attr("content");
+			var header=$("meta[name='_csrf_header']").attr("content")
+			var notifiedMember=[[${notifyingCheckDTO.notifiedMember}]];
+			var writingId =[[${notifyingCheckDTO.writingId}]];
+			var commentId = [[${notifyingCheckDTO.commentId}]];
+			var boardId = [[${notifyingCheckDTO.boardId}]];
+			var memMail = notifiedMember.split('(')[1];
+			var selectDate = $('select option:selected').text();
+			memMail = memMail.split(')')[0];
+			console.log(writingId);
+			console.log(commentId);
+
+			if(confirm("해당 회원 차단 및 글 삭제를 진행하시겠습니까?")){
+				if(commentId==null){
+					var url = '/MemBannAndContentDel'
+					$.ajax({
+						url : url,
+						type : 'POST',
+						data : {
+							memMail : memMail,
+							writingId : writingId,
+							boardId : boardId,
+							selectDate : selectDate
+						},
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(header,token);
+						},
+						success : function(result){
+							opener.location.reload();
+							window.close();
+
+						},
+						error : function(){
+							alert('error');
+						}
+					})
+				}else{
+					var url = '/MemBannAndCommentDel'
+					$.ajax({
+						url : url,
+						type : 'POST',
+						data : {
+							memMail : memMail,
+							commentId : commentId,
+							boardId : boardId,
+							selectDate : selectDate
+						},
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(header,token);
+						},
+						success : function(result){
+							opener.location.reload();
+							window.close();
+						},
+						error : function(){
+							alert('error');
+						}
+					})
+				}
+			}else{
+				alert('취소되었습니다.')
+				window.close();
+			}
+		}
+	</script>
+	<style>
+		[readonly=readonly]{
+			color: gray;
+		}
+	</style>
+</head>
+<body>
+<div>
+	<p>신고자</p>
+	<input type="text" th:value="${notifyingCheckDTO.member}" readonly="readonly">
+</div>
+<div>
+	<p>피신고자</p>
+	<input type="text" th:value="${notifyingCheckDTO.notifiedMember}" readonly="readonly">
+</div>
+<div>
+	<p>제목</p>
+	<input type="text" th:value="${notifyingCheckDTO.title}" readonly="readonly">
+</div>
+<div>
+	<p>내용</p>
+	<textarea th:text="${notifyingCheckDTO.content}" id="content" readonly="readonly"></textarea>
+</div>
+<div class="radios">
+	<p>신고 유형 :</p>
+	<label>욕설</label>
+	<input type="radio" th:checked="${notifyingCheckDTO.notifiedCase.toString()}=='욕설'" th:disabled="${notifyingCheckDTO.notifiedCase.toString()}!='욕설'">
+	<label>음란물</label>
+	<input type="radio" th:checked="${notifyingCheckDTO.notifiedCase.toString()}=='음란물'" th:disabled="${notifyingCheckDTO.notifiedCase.toString()}!='음란물'">
+	<label>무단광고</label>
+	<input type="radio" th:checked="${notifyingCheckDTO.notifiedCase.toString()}=='무단광고'" th:disabled="${notifyingCheckDTO.notifiedCase.toString()}!='무단광고'">
+	<label>기타</label>
+	<input type="radio" th:checked="${notifyingCheckDTO.notifiedCase.toString()}=='기타'" th:disabled="${notifyingCheckDTO.notifiedCase.toString()}!='기타'">
+</div>
+<div>
+	<p>상세 신고 이유 :</p>
+	<textarea th:text="${notifyingCheckDTO.notifiedReason}" id="reason" readonly="readonly"></textarea>
+</div>
+<div>
+	<p>차단기간 설정</p>
+	<div class="selectContainer">
+		<select>
+			<option>1일</option>
+			<option>7일</option>
+			<option>30일</option>
+		</select>
+	</div>
+</div>
+<div class="buttonContainer">
+	<button type="button" onclick=" bannedAndDelete()" style="width: 200px;">차단 및 글 삭제</button>
+</div>
+</body>
+</html>

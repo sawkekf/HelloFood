@@ -1,0 +1,112 @@
+	<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/myComments}">
+<div layout:fragment="content">
+<div id="myCommentContainer">
+<h1 style="margin-bottom: 15px;">내 댓글</h1>
+	<select onchange="changeBoard()" class="boardSelector">
+		<option value="recipe">레시피 게시판</option>
+		<option value="cook">요리자랑 게시판</option>
+	</select>
+	<div id="Mycomments">
+		<div th:if="${noRecipeComment}!=null" class="noRecipeComment">
+			<span th:text="${noRecipeComment}" class="noComment"></span>
+		</div>
+		<fieldset th:each="mypageComment, i:${mypageRecipeCommentDTO}" class="recipeBoard rcComment">
+			<legend th:text="${#temporals.format(mypageComment.regDate,'yyyy-MM-dd')}" class="dateTime"></legend>
+			<span th:text="'['+${mypageComment.board.boardname}+'] '" class="comCon"></span>
+			<span th:text="${mypageComment.title}+' 에 남긴 댓글'" style="font-weight: bold; font-size: 1.1em"></span>
+			<div th:text="${mypageComment.content}" th:class="'myRecipeComment'+${i.count}+'content commentContent'"></div>
+			<div class="commentUnder">
+				<div style="display: inline-block; color: black;">
+					<span th:text="'작성시각 : '+${#temporals.format(mypageComment.regDate,'HH:mm')}" class="time"></span>
+					<input type="hidden" th:value="${mypageComment.commentid}" th:class="'myRecipeComment'+${i.count}">
+					<input type="hidden" th:value="${mypageComment.board.boardid}" th:class="'myRecipeComment'+${i.count}+'board'">
+					<button type="button" onclick="openResend(this.value)" th:value="'myRecipeComment'+${i.count}" class="reAndCan">수정</button>
+					<button type="button" onclick="deleteMyRecipeComment(this.value)" th:value="'myRecipeComment'+${i.count}" class="reAndCan">삭제</button>
+				</div>
+			</div>
+		</fieldset>
+	    
+		<div th:if="${noCookComment}!=null" style="display: none" class="noCookComment">
+			<span th:text="${noCookComment}" class="noComment"></span>
+		</div>
+		<fieldset th:each="mypageComment, i:${mypageCookCommentDTO}" class="cookBoard coComment" style="display: none">
+			<legend th:text="${#temporals.format(mypageComment.regDate,'yyyy-MM-dd')}" class="dateTime"></legend>
+				<span th:text="'['+${mypageComment.board.boardname}+'] '" class="comCon"></span>
+				<span th:text="${mypageComment.title}+' 에 남긴 댓글'"></span>
+			<div th:text="${mypageComment.content}" th:class="'myCookComment'+${i.count}+'content commentContent'"></div>
+			<div class="commentUnder">
+				<div>
+					<span th:text="'작성시각 : '+${#temporals.format(mypageComment.regDate,'HH:mm')}" class="time"></span>
+					<input type="hidden" th:value="${mypageComment.commentid}" th:class="'myCookComment'+${i.count}">
+					<input type="hidden" th:value="${mypageComment.board.boardid}" th:class="'myCookComment'+${i.count}+'board'">
+					<button type="button" onclick="openResend(this.value)" th:value="'myCookComment'+${i.count}" class="reAndCan">수정</button>
+					<button type="button" onclick="deleteMyCookComment(this.value)" th:value="'myCookComment'+${i.count}" class="reAndCan">삭제</button>
+				</div>
+			</div>
+		</fieldset>
+		
+	</div>
+</div>
+	
+		<div th:if="${noRecipeComment}==null"  class="recipeBoardList" th:with="start=${(mypageRecipeCommentDTO.number/maxPage)*maxPage + 1}, end=(${(mypageRecipeCommentDTO.totalPages == 0) ? 1 : (start + (maxPage - 1) < mypageRecipeCommentDTO.totalPages ? start + (maxPage - 1) : mypageRecipeCommentDTO.totalPages)})">
+		
+			 <ul class="pagination justify-content-center">
+	    
+			<li class="page-item" th:classappend="${mypageRecipeCommentDTO.number eq 0}?'disabled':''">
+	       		 <a th:href="@{'/mypage/myComment' +'?page=' + ${(mypageRecipeCommentDTO.number-1)>-1? mypageRecipeCommentDTO.number-1:0}+'&select=recipe'}" aria-label='Previous' class="page-link">
+	        	  <span aria-hidden='true'><</span>
+	        </a>
+	      </li>
+	
+		    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${mypageRecipeCommentDTO.number eq page-1}?'active':''">
+		        <a th:inline="text" th:href="@{'/mypage/myComment'+ '?page=' + ${page-1}+'&select=recipe'}" class="page-link">[[${page}]]</a>
+		   </li>
+		   
+		   <li class="page-item" th:classappend="${mypageRecipeCommentDTO.number+1 ge mypageRecipeCommentDTO.totalPages}?'disabled':''">
+       			 <a th:href="@{'/mypage/myComment' +'?page=' + ${(mypageRecipeCommentDTO.number+1)==(mypageRecipeCommentDTO.totalPages)? mypageRecipeCommentDTO.totalPages-1 : mypageRecipeCommentDTO.number+1 }+'&select=recipe'}" aria-label='Next' class="page-link">
+         		 <span aria-hidden='true'>></span>
+        </a>
+      </li>
+		   
+		   
+	    </ul>
+		
+		</div>
+	
+		<div th:if="${noCookComment}==null" class="cookBoardList" th:with="start=${(mypageCookCommentDTO.number/maxPage)*maxPage + 1}, end=(${(mypageCookCommentDTO.totalPages == 0) ? 1 : (start + (maxPage - 1) < mypageCookCommentDTO.totalPages ? start + (maxPage - 1) : mypageCookCommentDTO.totalPages)})" style="display: none">
+		
+			 <ul class="pagination justify-content-center">
+	    
+			<li class="page-item" th:classappend="${mypageCookCommentDTO.number eq 0}?'disabled':''">
+	       		 <a th:href="@{'/mypage/myComment' +'?page=' + ${(mypageCookCommentDTO.number-1)>-1? mypageCookCommentDTO.number-1:0}+'&select=cook'}" aria-label='Previous' class="page-link">
+	        	  <span aria-hidden='true'><</span>
+	        </a>
+	      </li>
+	
+		    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${mypageCookCommentDTO.number eq page-1}?'active':''">
+		        <a th:inline="text" th:href="@{'/mypage/myComment'+ '?page=' + ${page-1}+'&select=cook'}" class="page-link">[[${page}]]</a>
+		   </li>
+		   
+		   <li class="page-item" th:classappend="${mypageCookCommentDTO.number+1 ge mypageCookCommentDTO.totalPages}?'disabled':''">
+       			 <a th:href="@{'/mypage/myComment' +'?page=' + ${(mypageCookCommentDTO.number+1)==(mypageCookCommentDTO.totalPages)? mypageCookCommentDTO.totalPages-1 : mypageCookCommentDTO.number+1 }+'&select=cook'}" aria-label='Next' class="page-link">
+         		 <span aria-hidden='true'>></span>
+        </a>
+      </li>
+		   
+		   
+	    </ul>
+		
+		</div>
+		
+	<form method="post" th:action="@{/mypage/myCommentResendPopUp}" target="myCommentResendPopUp" id="resend" style="display: none;">
+		<input type="hidden" name="commentId" id="commentId"/>
+		<input type="hidden" name="content" id="content"/>
+		<input type="hidden" name="boardId" id="boardId">
+	</form>
+	
+
+</div>
+</html>

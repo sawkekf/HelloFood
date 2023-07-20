@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content" style="width:100vw" id="main_outline">
+    <div class="main_set main1">
+        <div class="main_position">
+        <div class="inter sub_sentence">하루 종일 고민했는데 또 고민?!<br>
+             고민은 이제 그만!</div>
+        <div class="doHyeon main_sentence">오늘 먹을 <span class="emphasis">요리 레시피</span>를<br> 추천해드립니다.</div>
+        <button type="button" id="call_bard" class="inter ai_btn">Cooking</button>
+        </div>
+        <button class ="movebtn moveToRcp1"><span>&rang;</span></button>
+    </div>
+    <div class="main_set main2">
+        <button class ="movebtn moveToRcp2"><span>&lang;</span></button>
+        <div id="radn_recipe">
+        	<p id="radn_recipe_title"></p>
+        	<p id="radn_recipe_level"></p>
+        	<p>재료명 : </p>
+        	<p id="radn_recipe_ingredient"></p>
+        	<p>조리 과정 : </p>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="mask" id="mask">
+    <img src="./img/loading.gif" alt="레시피 제조중..." style="width:300px;height:200px">
+</div>
+
+<script layout:fragment="javascript" th:inline = "javascript">
+  $("#call_bard").click(function(){
+    var token=$("meta[name='_csrf']").attr("content");
+    var header=$("meta[name='_csrf_header']").attr("content");
+    var method = `<p class="radn_recipe_method"></p>`
+    var cookTip = `<p id="radn_recipe_cook_tip"></p>`
+    const mask = document.getElementById("mask");
+    mask.style.display = "flex";
+    
+        $.ajax({
+            type:'POST',
+            url:'/random',
+            beforeSend : function(xhr){
+		        xhr.setRequestHeader(header,token);
+		      },
+            success: function(data){
+            	var content = data.cook_method.split("\n");
+                $('#radn_recipe_title').text('요리명 : '+data.cook_title);
+                $('#radn_recipe_level').text('난이도 : '+data.cook_level);
+                $('#radn_recipe_ingredient').text(data.cook_ingredient);
+            	for(var i=0; i<content.length; i++){
+            		 $('#radn_recipe').append(method);
+	                $('.radn_recipe_method').eq(i).text(content[i]);
+            	}
+            	$('#radn_recipe').append(`<p>요리 팁 : </p>`);
+            	$('#radn_recipe').append(cookTip);
+                $('#radn_recipe_cook_tip').text(data.cook_tip);
+                $('#radn_recipe').css('display','block');
+                $('.moveToRcp2').css('display','block');
+
+                mask.style.display = "none";
+                console.log(data);
+                var meths = $('.radn_recipe_method');
+                var totalStrings = '';
+                for(var i=0; i<meths.length; i++){
+                	var meth = $('.radn_recipe_method').eq(i).text()+','
+                	totalStrings += meth;
+                }
+                $('.main2').css('display','block');
+                $('.main1').css('display','none');
+                console.log(totalStrings);
+               // var ing = data.cook_ingredient.replaceAll('*','').replaceAll('\n','').split(' ');
+               // console.log(ing)
+            },
+            error: function(){
+                mask.style.display = "none";
+                console.error();
+            }
+        })
+});
+  
+$('.moveToRcp1').click(function(){
+
+    $('.moveToRcp2').css('display','block');
+    $('.moveToRcp1').css('display','none');
+    $('.main2').css('display','block');
+    $('.main1').css('display','none');
+    });
+$('.moveToRcp2').click(function(){
+    $('#main_outline').css({"transition":"0.5s ease-in","transform":"translateX(0)"});
+    $('.moveToRcp1').css('display','block');
+    $('.moveToRcp2').css('display','none');
+    $('.main2').css('display','none');
+    $('.main1').css('display','block');
+    });
+
+</script>

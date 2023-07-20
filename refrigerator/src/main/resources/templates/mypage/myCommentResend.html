@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<link th:href="@{/css/mypage.css}" type="text/css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+		function commentResend(){
+			var token=$("meta[name='_csrf']").attr("content");
+			var header=$("meta[name='_csrf_header']").attr("content")
+			var boardId = $('#boardId').val();
+			var commentId = $('#commentId').val();
+			var content = $('#content').val();
+			if(boardId==1){
+				var url = '/recipeBoard/recipeCommentResend/'+commentId;
+				$.ajax({
+					url : url,
+					type : 'POST',
+					data : {
+						content : content
+					},
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header,token);
+					},
+					success : function(result){
+						window.close();
+					},
+					error : function(){
+						alert('error')
+					}
+				});
+			}else if(boardId==2){
+				var url = "/cookBoard/CookCommentReWriting/"+commentId;
+				$.ajax({
+					url : url,
+					type : 'POST',
+					data : {
+						content : content
+					},
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header,token);
+					},
+					success : function(result){
+						window.close();
+					},
+					error : function(){
+						alert('error')
+					}
+				});
+			}
+		}
+	</script>
+
+	<style>
+		body{
+			overflow: hidden;
+		}
+	</style>
+
+</head>
+<body>
+
+<p style="text-align: center">댓글 수정</p>
+<div class="resendContainer">
+	<input type="text" th:value="${content}" id="content" class="resendInput"/>
+	<input type="hidden" th:value="${commentId}" id="commentId"/>
+	<input type="hidden" th:value="${boardId}" id="boardId"/>
+</div>
+
+<div class="buttonContainer">
+	<button type="button" onclick="commentResend()" class="resendButton">수정</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/css/find/findPW.css" rel="stylesheet" type="text/css"/>
+    <title>Change Password</title>
+</head>
+
+<body>
+<img th:src="@{/img/logo_black.png}" onclick="location.href='/';" class="logo"/>
+<input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+<div class="container" id="container">
+    <div class="col align-items-center flex-col">
+        <div class="form-wrapper align-items-center">
+            <div class="form upscale">
+                <div class="input-group">
+                    <input id="newPassword" oninput="validatePassword()" placeholder=" " type="password">
+                    <label for="newPassword">패스워드</label>
+                    <span id="validatePW"></span>
+                </div>
+                <div class="input-group">
+                    <input id="checkPW" oninput="validatePassword()" placeholder=" " type="password">
+                    <label for="checkPW">패스워드 확인</label>
+                    <span id="finalCheckPW"></span>
+                </div>
+                <div>
+                    <button class="button-change btnFloat" disabled id="changePWBtn" type="button"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let pwComplete = 0;
+
+    function combine(str) {
+        let checkNumAlpha = /[a-z0-9]/;
+        let checkLowercase = /[a-z]/;
+        let checkNumber = /[0-9]/;
+        let checkWildcard = /[!@#$%^&*]/;
+        let checkLength = /^.{8,16}$/
+
+
+        return checkNumAlpha.test(str) && checkLowercase.test(str) && checkNumber.test(str) && checkWildcard.test(str) && checkLength.test(str);
+    }
+
+    //validatePassword Start
+    let newPassword = document.getElementById("newPassword");
+    let validatePW = document.getElementById("validatePW");
+    let checkPW = document.getElementById("checkPW");
+    let finalCheckPW = document.getElementById("finalCheckPW");
+    let changePWBtn = document.getElementById("changePWBtn");
+
+    function validatePassword() {
+        //Password
+        if (newPassword.value) {
+            if (!combine(newPassword.value)) {
+                validatePW.innerHTML = "<span style='color:red'>영문,숫자,특수문자(필수) 조합 8자 이상 16자 이하</span>";
+                newPassword.style.border = "0.125rem solid red";
+            } else {
+                validatePW.innerHTML = "<span style='color:green'>안전한 비밀번호입니다.</span>";
+                newPassword.style.border = "0.125rem solid #4EA685"
+            }
+        } else {
+            validatePW.innerHTML = "";
+            newPassword.style.border = "0.125rem solid #ced4da";
+        }
+        //Confirm Password
+        if (newPassword.value && checkPW.value) {
+            if (newPassword.value === checkPW.value && combine(newPassword.value)) {
+                finalCheckPW.innerHTML = "<span style='color:green'>비밀번호가 일치합니다.</span>";
+                checkPW.style.border = "0.125rem solid #4EA685"
+                pwComplete = 1;
+            } else if (newPassword.value === checkPW.value && !combine(newPassword.value)) {
+                finalCheckPW.innerHTML = "<span style='color:red'>패스워드를 다시 확인해주세요.</span>";
+                checkPW.style.border = "0.125rem solid red"
+                pwComplete = 0;
+            } else {
+                finalCheckPW.innerHTML = "<span style='color:red'>패스워드가 일치하지 않습니다.</span>";
+                checkPW.style.border = "0.125rem solid red"
+                pwComplete = 0;
+            }
+        } else {
+            finalCheckPW.innerHTML = "";
+            checkPW.style.border = "0.125rem solid #ced4da";
+            pwComplete = 0;
+        }
+
+        changePWBtn.disabled = pwComplete !== 1;
+    }
+
+    //validatePassword End
+    $('#changePWBtn').click(function () {
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        let newPW = $('#newPassword').val();
+
+        $.ajax({
+            url: "/member/changePW",
+            type: "post",
+            data: newPW,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function () {
+                alert("변경 완료");
+                window.location.href = "/member/login";
+            }
+        })
+    })
+
+</script>
+<script src="/js/find.js"></script>
+</body>
+
+</html>

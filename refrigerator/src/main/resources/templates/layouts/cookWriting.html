@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/board.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <title>요리자랑 게시판</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor.css" rel="stylesheet"> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor-contents.css" rel="stylesheet"> -->
+  <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+  <!-- languages (Basic Language: English/en) -->
+  <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
+
+  <style>
+    .se-selector-color{
+      max-width: 420px;
+    }
+
+    .sun-editor .se-list-layer .se-selector-color {
+      display: flex;
+      width: max-content;
+      max-width: 420px;
+      height: auto;
+      padding: 0;
+      margin: auto;
+    }
+
+    form{
+      background-color: rgba(255,255,255,0.8);
+      opacity : 0.9;
+      width: 1629px;
+      margin: 1% 5% 0px;
+      border-radius: 15px;
+      padding-bottom: 25px;
+      padding-left: 100px;
+      padding-top: 25px;
+    }
+
+    h1{
+      margin-left: 125px;
+      margin-bottom : 50px;
+      position: relative;
+      top: 25px;
+    }
+
+    .inputContainer{
+      border: 1px solid silver;
+      margin-left: 125px;
+      padding-top: 20px;
+      padding-left : 25px;
+      padding-bottom : 20px;
+      margin-bottom : 20px;
+      width: 1275px;
+    }
+    #title{
+      width : 1244px;
+      border: 1px solid silver;
+      margin-right : 25px;
+      margin-bottom: 10px;
+    }
+
+    [type=file]{
+      display: block;
+    }
+
+    .content-inline{
+      display: inline-block;
+    }
+
+    .content-block{
+      display: block;
+    }
+
+    .inputFileContainer{
+      border: 1px solid silver;
+      margin-left: 125px;
+      padding-top: 20px;
+      padding-left : 25px;
+      padding-bottom : 20px;
+      margin-bottom : 20px;
+      width: 1275px;
+    }
+    .content-inline{
+      border : 1px solid silver;
+      padding : 10px;
+      width : 800px;
+      margin-right : 10px;
+      margin-bottom : 20px;
+      text-overflow : ellipsis;;
+    }
+    #footContainer{
+      border: 1px solid silver;
+      width : 1300px;
+      height : 100px;
+      margin-left: 125px;
+      margin-top: 50px;
+      margin-bottom: 25px;
+    }
+    .writeButton{
+      margin-top : 35px;
+      margin-left : 550px;
+      height : 30px;
+      width : 100px;
+      background-color: #2F89DD;
+      border: none;
+      border-radius: 3px;
+      font-size: 15px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .cancleButton{
+      margin-top : 35px;
+      margin-left : 20px;
+      height : 30px;
+      width : 100px;
+      border-radius: 3px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    [type=file]{
+      position: absolute;
+      width: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+    }
+
+
+    .label{
+      background-color: white;
+      border: 1px solid black;
+      padding : 5px;
+      border-radius: 3px;
+      width: 90px;
+      height: 25px;
+      font-size: 12px;
+      font-weight : bold;
+    }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script layout:fragment="javascript" th:inline="javascript">
+
+    $(function(){
+      SUNEDITOR.create('content',{
+        font : [
+          '맑은고딕',
+          '굴림',
+          '바탕',
+          '돋움',
+          '궁서',
+          '휴먼편지체',
+          'Arial',
+          'Verdana',
+          'Courier New',
+          'tahoma',
+          'Do Hyeon'
+        ],
+        fontSize : [
+          8, 10, 14, 18, 24, 36, 48, 60
+        ],
+        colorList: [
+          ['#FF0000','#FF5E00','#FFBB00','#FFE400','#ABF200','#1DDB16','#00D8FF','#0054FF','#0100FF','#5F00FF','#FF00DD','#FF007F','#000000','#FFFFFF'],
+          ['#FFD8D8','#FAE0D4','#FAECC5','#FAF4C0','#E4F7BA','#CEFBC9','#D4F4FA','#D9E5FF','#DAD9FF','#E8D9FF','#FFD9FA','#FFD9EC','#F6F6F6','#EAEAEA'],
+          ['#FFA7A7','#FFC19E','#FFE08C','#FAED7D','#CEF279','#B7F0B1','#B2EBF4','#B2CCFF','#B5B2FF','#D1B2FF','#FFB2F5','#FFB2D9','#D5D5D5','#BDBDBD'],
+          ['#F15F5F','#F15F5F','#F2CB61','#E5D85C','#BCE55C','#86E57F','#5CD1E5','#6799FF','#6B66FF','#A566FF','#F361DC','#F361A6','#A6A6A6','#8C8C8C'],
+          ['#CC3D3D','#CC723D','#CCA63D','#C4B73B','#9FC93C','#47C83E','#3DB7CC','#4374D9','#4641D9','#8041D9','#D941C5','#D9418C','#747474','#5D5D5D'],
+          ['#980000','#993800','#997000','#998A00','#6B9900','#2F9D27','#008299','#003399','#050099','#3F0099','#990085','#99004C','#4C4C4C','#353535'],
+          ['#670000','#662500','#664B00','#665C00','#476600','#22741C','#005766','#002266','#030066','#2A0066','#660058','#660033','#212121','#191919']
+        ],
+        width: '100%',
+        maxWidth: '1250px',
+        minWidth: 1250,
+        minheight : '600px',
+        imageWidth : 150,
+        popupDisplay: 'local',
+        resizingBar: false,
+        buttonList : [
+          ['font', 'fontSize'],
+          ['bold', 'underline', 'italic', 'strike'],
+          ['fontColor', 'hiliteColor'],
+          ['outdent', 'indent'],
+          ['align', 'horizontalRule', 'list', 'lineHeight'],
+          ['table' ]
+        ],
+        imageFileInput : false,
+        callBackSave: function (contents) {
+          alert(contents);
+        }
+      });
+    });
+
+    function changeVal(){
+      var checkBox = document.getElementById("notice");
+      var notice = document.getElementById("noticeCheck");
+      console.log(checkBox.checked);
+      notice.value="Y";
+      if(!checkBox.checked){
+        notice.value="N";
+      }
+      console.log(notice);
+
+    }
+
+    var count = 2;
+    function sendImage(){
+      console.log(count);
+      var token=$("meta[name='_csrf']").attr("content");
+      var header=$("meta[name='_csrf_header']").attr("content")
+      var fileSize = 10 * 1024 * 1024 ;
+      var input = `<div><input type="file" id="image${count}" name="images" onchange="sendImage()" class="imgCount${count}"><label for="image${count}" class="label${count} label">이미지 등록</label></div>`;
+      var fileInput = $('#image'+`${count-1}`)[0];
+      var file = fileInput.files[0];
+      var fileName = file.name;
+      var fileCheck = fileName.split('.')[1];
+      var inputFileName = `<div class="imgCount${count-1} content-block"><div class="content-inline" id="imgCount${count-1}">${fileName}</div><button type="button" value="imgCount${count-1}" onclick="delFunc(this.value)" class="content-button">x</button></div>`;
+      console.log(fileCheck);
+      var formData = new FormData();
+      formData.append('image',file);
+      formData.append('count',count-1);
+      var url = "/cookBoard/doCookImageSet"
+      if(fileCheck!='jpg' && fileCheck!='gif' && fileCheck!='png' && fileCheck!='jpeg'){
+        alert('jpg, jpeg, gif, png 이외의 파일은 등록되지 않습니다.')
+      }else if(fileSize<file.size){
+        alert('10MB이상의 이미지 파일은 등록할 수 없습니다.');
+      }else{
+        $.ajax({
+
+          url : url,
+          type : 'POST',
+          enctype:'multipart/form-data',
+          contentType : false,
+          processData : false,
+          data : formData,
+          beforeSend : function(xhr){
+            xhr.setRequestHeader(header,token);
+          },
+          success : function(result){
+            var imageUrl = result;
+            var img = '<img src='+result+` style="width:200px; height:200px" class="imgCount${count-2} images">`
+            $('.sun-editor-editable').append(img);
+
+          },
+          error : function(){
+            alert('error')
+          }
+
+        })
+
+        $('.inputFileContainer').append(inputFileName);
+        $('.inputFileContainer').append(input);
+        $('.label'+`${count-1}`).css('display','none');
+        count++;
+      }
+    }
+
+    function addContent(){
+      var value = $('.sun-editor-editable').html()
+      var content = $('#contents').val(value)
+      console.log(content)
+      if($.trim($('#title').val())==''){
+        alert('제목을 입력해주세요')
+      }else if($('#contents').val()=='<p><br></p>'){
+        alert('내용을 입력해주세요')
+      }else{
+        $('#form').submit();
+      }
+    }
+
+    function delFunc(t){
+      var token=$("meta[name='_csrf']").attr("content");
+      var header=$("meta[name='_csrf_header']").attr("content")
+      var imgContent = $('.'+t);
+      var imgContent2 = $('img.'+t);
+      var imgParent = imgContent2.parent().parent();
+      var button = $('[value='+t+']');
+      var oriName = $('#'+t).text();
+      var url = '/cookBoard/removeTemporalImage'
+      console.log(oriName);
+      $.ajax({
+        url : url,
+        type : 'POST',
+        data : {
+          oriName : oriName
+        },
+        beforeSend : function(xhr){
+          xhr.setRequestHeader(header,token);
+        },
+        success : function(result){
+          if(imgParent.attr('class').split(' ')[1]=='se-image-container'){
+            imgParent.remove();
+          }
+          imgContent.remove();
+          button.remove();
+        },
+        error : function(){
+
+        }
+      })
+    }
+
+    $(document).ready(function memCheck(){
+      var memRole = [[${member.role}]];
+      if(memRole!='ADMIN'){
+        $('.mypage_form').css('height','160px');
+      }
+      $('.se-controller-resizing').remove();
+      $('.se-resizing-container').remove();
+      $('.se-line-breaker-component').remove();
+
+      $('.sun-editor-editable').keydown(function(){
+        var inputerLength = $('.content-block').length;
+        for(var i=0; i<inputerLength; i++){
+          if($('img.imgCount'+(i+1)).length==0){
+            $('#imgCount'+(i+1)).remove();
+            $('[value=imgCount'+(i+1)+']').remove();
+            $('input.imgCount'+(i+1)).remove();
+          }
+        }
+      });
+      $('.w-nav-link').eq(2).css({'color':'black','font-weight':'bolder'});
+    });
+
+
+  </script>
+</head>
+<body class="body">
+<div th:replace="fragments/gnb::navi"></div>
+<div layout:fragment="content"></div>
+
+</body>
+</html>

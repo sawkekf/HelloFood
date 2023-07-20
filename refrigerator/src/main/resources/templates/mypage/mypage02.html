@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/profile}">
+<div layout:fragment="content" class="mypage_main">
+    <div class="profile-container">
+        <h1>프로필 관리</h1>
+        <div class="backgroundContainer">
+            <h2 style="margin-left: 2%;" th:text="${nickname}+'님의 프로필'"></h2>
+            <h5 style="margin-left: 4%;">프로필 사진을 변경하거나, 쉐프의 프로필 정보를 수정할 수 있습니다.</h5>
+            <div class="profile-image">
+                <label for="imageInput">
+                    <img id="profileImage" alt="프로필 이미지" class="profile" th:if="${memberImg}!=null"
+                         th:src="${memberImg.imgUrl}" />
+                    <img id="profileImage" alt="프로필 이미지" class="profile" th:if="${memberImg}==null"
+                         th:src="@{/img/cook.jpeg}" />
+                </label>
+                <input type="file" id="imageInput" onchange="changePostImage()">
+                <h5 style="margin-left: 0%; text-align: center;">프로필 사진을 변경을 원하시면 이미지를 기존 이미지로 바꾸고 싶으시면 카메라를 클릭해주세요.</h5>
+            </div>
+            <img class = "camara" src="/img/camera.png" onclick="changeFirst()">
+            <div class="profile-info">
+
+                <div class="profile-details">
+                    <h4><span class="label">이메일 : <span th:text="${email}"></span></h4>
+                    <h4>쉐프 이름 : <span th:text="${name}"></span></h4>
+                    <h4>닉네임 변경</h4>
+                    <div class="input-group">
+                        <input id="newNickname" oninput="validateNickname()" placeholder=" " th:value="${nickname}" type="text">
+                        <label for="newNickname">닉네임</label>
+                        <a class="button-search" id="changeNickBtn" type="button">
+                            <img alt="이미지" class="btnImg" th:src="@{/img/find/check.png}">
+                        </a>
+                    </div>
+                    <div id="validNickname"></div>
+                </div>
+            </div>
+            <div th:if="${loginType.toString()}=='NOMAL'"    id="passwordUpdate" style="display: block; margin-left: 34.7%;">
+                <h4 style="margin-bottom: 1%;">비밀번호 변경</h4>
+                <div class="passwordInput">
+                    <input type="password" id="currentPassword" name="currentPassword" placeholder=" ">
+                    <label for="currentPassword">현재 비밀번호</label>
+                    <a class="button-search" id="changeNickBtn" type="button" onclick="checkPassword()">
+                        <img alt="이미지" class="btnImg" th:src="@{/img/find/search.png}">
+                    </a>
+                </div>
+
+                <div class="hiddenPassword" style="display: none;">
+                    <div class="passwordInput">
+                        <input type="password" id="newPassword" name="newPassword" onkeyup="newPasswordWarning()"
+                               placeholder=" ">
+                        <label for="newPassword">변경 비밀번호</label>
+                    </div>
+                    <div class="newPasswordWarning errorMessage" style="display: none; color: red;">
+                        영문,숫자,특수문자(필수) 조합 8자 이상 16자 이하
+                    </div>
+                    <div class="passwordInput">
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                               onkeyup="confirmPasswordWarning()" placeholder=" ">
+                        <label for="confirmPassword">변경 비밀번호 확인</label>
+                        <a class="button-search" id="changeNickBtn" type="button" onclick="sendNewpassword()">
+                            <img alt="이미지" class="btnImg" th:src="@{/img/find/check.png}">
+                        </a>
+
+                    </div>
+                    <div class="confirmPasswordWarning errorMessage" style="display: none; color: red;">
+                        동일한 비밀번호가 아닙니다.
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</html>

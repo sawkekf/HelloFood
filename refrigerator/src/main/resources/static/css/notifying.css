@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+body{
+	background-size : 1600px;
+	background-image: linear-gradient(rgba(190, 190, 190, 0.6), rgba(190, 190, 190, 0.6)),url('../img/notyfing.jpg');
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+p{
+	font-weight: bolder;
+	text-align: center;
+	font-size: 1.8em;
+	margin-bottom: 10px;
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+[readonly=readonly]{
+	color: gray;
+}
+
+[type=text]{
+	width: 40%;
+    border: 1px solid #8491a7;
+    background: #fff;
+    border-radius: 10px;
+    padding: 2px 2px 2px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    box-sizing: border-box;
+    margin-left: 30%;
+    overflow: visible;
+    text-align: center;
+}
+.radios{
+	text-align: center;
+}
+#content{
+	width: 40%;
+    border: 1px solid #8491a7;
+    background: #fff;
+    border-radius: 10px;
+    padding: 2px 2px 2px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    box-sizing: border-box;
+    margin-left: 30%;
+	height: 150px;
+	text-align: left;
+	overflow-wrap: break-word;
+	text-overflow: ellipsis;
+	resize: none;
+}
+#reason{
+	width: 50%;
+    border: 1px solid #8491a7;
+    background: #fff;
+    border-radius: 10px;
+    padding: 2px 2px 2px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    box-sizing: border-box;
+    margin-left: 25%;
+    height: 150px;
+    text-overflow: ellipsis;
+    resize: none;
+}
+
+label{
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.buttonContainer{
+	margin-top : 30px;
+	margin-bottom : 15px;
+	text-align: center;
+}
+
+[type=button]{
+	border: none;
+	width: 100px;
+	height: 50px;
+	font-weight: bolder;
+	padding-top : 5px;
+	font-size: 1.6em;
+	border-radius: 5px;
+	background-color: #FFFFD2;
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+.selectContainer{
+	text-align: center;
+}
+
+select{
+	width: 100px;
+	border: 2px solid black;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 1.1em;
+	text-align: center;
+}

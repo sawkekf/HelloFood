@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/cookBoard}">
+<div layout:fragment="content">
+	<div id="cookBoardContainer">
+		<h1>요리자랑</h1>
+		<form class="form-inline my-2 my-lg-0" th:action="@{/cookBoard/}" method="get">
+			<div class="form-inline justify-content-center" th:object="${cookSearchDTO}">
+				<select th:field="*{searchBy}" class="form-control" style="width:auto;">
+					<option value="title">제목</option>
+					<option value="nickName">작성자</option>
+				</select>
+				<input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
+				<button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+			</div>
+		</form>
+		<div class="contents">
+			<div class="nonWriting" th:if="${nonWriting}!=null">[[${nonWriting}]]</div>
+			<div class="content" th:each="cookBoard : ${cookBoards}">
+
+				<div class="imgBack" th:onclick="|location.href='@{/cookBoard/CookBoardDetail(writingId=${cookBoard.writingId})}'|"><img class="cookImg" th:src="${cookBoard.cookImage.url}" onerror="this.src='/img/noimage.png'; this.style.width='30px'; this.style.height='30px'; this.style.marginLeft='10px'; this.style.marginTop='5px';"></div>
+				<div class="title"><a class="titleLink" th:href="'/cookBoard/CookBoardDetail?writingId='+${cookBoard.writingId}">[[${cookBoard.title}]]</a></div>
+				<div class="nickName" th:onclick="|location.href='@{/cookBoard/(searchBy='nickName',searchQuery=${cookBoard.member.nickname})}'|">[[${cookBoard.member.nickname}]]</div>
+				<div th:text="'추천수 '+${cookBoard.recomCount}+' |' " class="recomAndseen"></div>
+				<div th:text="'조회수 '+${cookBoard.seenCount}" class="recomAndseen"></div>
+
+			</div>
+		</div>
+
+		<button type="button" onclick="goWriting()" class="writingButton">글쓰기</button>
+		<div th:with="start=${(cookBoards.number/maxPage)*maxPage + 1}, end=(${(cookBoards.totalPages == 0) ? 1 : (start + (maxPage - 1) < cookBoards.totalPages ? start + (maxPage - 1) : cookBoards.totalPages)})" style=" display: inline-block; width: 76%; text-align: center;">
+			<ul class="pagination justify-content-center">
+
+				<li class="page-item" th:classappend="${cookBoards.number eq 0}?'disabled':''">
+					<a th:href="@{'/cookBoard/' +'?searchBy='+ ${cookSearchDTO.searchBy} + '&searchQuery=' + ${cookSearchDTO.searchQuery} + '&page=' + ${(cookBoards.number-1)>-1? cookBoards.number-1:0}}" aria-label='Previous' class="page-link">
+						<span aria-hidden='true'><</span>
+					</a>
+				</li>
+
+				<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${cookBoards.number eq page-1}?'active':''">
+					<a th:inline="text" th:href="@{'/cookBoard/' +'?searchBy='+ ${cookSearchDTO.searchBy} + '&searchQuery=' + ${cookSearchDTO.searchQuery} + '&page=' + ${page-1}}" class="page-link">[[${page}]]</a>
+				</li>
+
+				<li class="page-item" th:classappend="${cookBoards.number+1 ge cookBoards.totalPages}?'disabled':''">
+					<a th:href="@{'/cookBoard/' +'?searchBy='+ ${cookSearchDTO.searchBy} + '&searchQuery=' + ${cookSearchDTO.searchQuery} + '&page=' + ${(cookBoards.number+1)==(cookBoards.totalPages)? cookBoards.totalPages-1 : cookBoards.number+1 }}" aria-label='Next' class="page-link">
+						<span aria-hidden='true'>></span>
+					</a>
+				</li>
+
+
+			</ul>
+		</div>
+
+
+	</div>
+	<div style="height: 100px;">
+    
+    </div>
+</div>
+</html>

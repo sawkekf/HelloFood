@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/recipeBoardDetail}">
+<div layout:fragment="content">
+<div id="writingContainer">
+<div th:if="${detailViewDTO.recipeBoard.delcheck.toString()}=='Y'">
+	삭제된 게시물입니다.
+</div>
+<div th:if="${detailViewDTO.recipeBoard.delcheck.toString()}!='Y'">
+	<img th:src="@{/img/notify3.png}" th:if="${detailViewDTO.recipeBoard.member.id != member.id}" onclick="notifyingMain()" id="notifyButton" width="50px" height="50px">
+	<img th:if="${member.name.toString()}!='guest'" src="/img/beanstar.png" onclick="followFunc()" id="star" width="50px" height="50px">
+	<div class="buttonContainer">
+		<button type="button" class="reButton"  th:onclick="|location.href='@{/recipeBoard/rewrite(writingId=${detailViewDTO.recipeBoard.writingid})}'|">수정</button>
+		<button type="button" class="delButton" th:onclick="|location.href='@{/recipeBoard/recipeView/delete(writingId=${detailViewDTO.recipeBoard.writingid})}'|">삭제</button>
+	</div>
+	<table class="titleBox" cellPadding="0px" cellSpacing="0px">
+		<tr>
+			<td style="text-align: center">
+				<h1 th:text="${detailViewDTO.recipeBoard.title}"></h1>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center" class="seenAndRecom">
+				<div th:text="${detailViewDTO.recipeBoard.member.nickname}" class="nick"></div>
+				<div th:text="' | 조회수 : '+${detailViewDTO.recipeBoard.seencount}+' | '" class="seen"></div>
+				<div th:text="'추천수 : '+${detailViewDTO.recipeBoard.recomcount}+' | '" th:value="${detailViewDTO.recipeBoard.recomcount}" class="recomCount"></div>
+				<img th:if="${member.name.toString()}!='guest'" th:src="@{/img/goodJob.png}" onclick="recomFunc()" width="30px" height="30px" id="goodJob">
+				<div th:text="' | '+${#temporals.format(detailViewDTO.recipeBoard.regdate,'yyyy-MM-dd HH:mm')}" class="regDate"></div>
+			</td>
+		</tr>
+	</table>
+	
+
+		
+		<table style="width: 202px; height: 202px; border: 1px solid silver; display: inline-block; position: relative; bottom: 80px; background-color: #EAEAEA;" cellpadding="0px" cellspacing="0px">
+			<tr>
+				<td>
+					<img class="capImage" th:src="${detailViewDTO.recipeImage.url}" onerror="this.src='/img/noimage.png'; this.style.width='30px'; this.style.height='30px'; this.style.marginLeft='10px'; this.style.marginTop='5px';" width="200px" height="200px"/>
+				</td>
+			</tr>
+		</table>
+		
+		<table class="ingredientContainger" cellSpacing="20px"> 
+			<tr th:each="recipeIngredient:${detailViewDTO.recipeIngredients}" class="ingTr">
+				<td class="ingTd">재료명 : </td><td class="ingTd2" th:text="${recipeIngredient.ingrediant}"></td><td class="ingTd">용량 : </td><td class="ingTd2" th:text="${recipeIngredient.ingrediantVol}"></td>
+			</tr>
+		</table>
+	<div class="totalContainer">
+		<div class="recipeStep">요리순서</div>
+		
+		<table class="contentContainer">
+			<tr th:each="recipeContent, i : ${detailViewDTO.recipeContents}" class="recipe">
+				<td class="step" th:text="'step'+${i.count<10 ? '0'+i.count:i.count}"></td>
+				<td th:text="${recipeContent.content}" class="text"></td>
+				<td class="imgTd"><img th:src="${recipeContent.url}" class="image" onerror="this.src='/img/noimage.png'; this.style.width='30px'; this.style.height='30px'; this.style.marginLeft='10px'; this.style.marginTop='5px';"></td>
+			</tr>
+		</table>
+		
+		<div class="TipContainer">
+			<div class="cookTip">요리 팁</div>
+			<div class="cookTipText" th:text="${detailViewDTO.recipeBoard.cooktip}"></div>
+		</div>
+	</div>
+
+		<div class="commentsContainer">
+			<table>
+				<tr th:each="recipeComment,i : ${detailViewDTO.recipeComments}" class="commentTr">
+					<td th:text="${recipeComment.member.nickname}" th:class="'comment'+${i.count}+'memNick comm nickName'" width="250px"></td>
+					<td th:text="${recipeComment.content}" th:class="'comment'+${i.count}+'content comm commentContent'" width="835px"></td>
+					<td th:text="${#temporals.format(recipeComment.regdate,'yyyy-MM-dd HH:mm')}" class="comm comReg"></td>
+					<td th:if="${recipeComment.member.id}==${member.id}"><button type="button" onclick="reComment(this.value)" th:value="'comment'+${i.count}" class="commentExtra">수정</button>/</td>
+					<td th:if="${recipeComment.member.id}==${member.id}"><button type="button" onclick="delFunc(this.value)" th:value="'comment'+${i.count}" class="commentExtra">삭제</button></td>
+					<td th:if="${recipeComment.member.id}!=${member.id}"><button type="button" onclick="notifyingComment(this.value)" th:value="'comment'+${i.count}" class="commentExtra commentNotifying">신고</button></td>
+					<td style="display: none;"><input type="hidden" th:value="${recipeComment.commentid}" th:id="'comment'+${i.count}"></td>
+					<td style="display: none;"><input type="hidden" th:value="${recipeComment.member.email}" th:class="'comment'+${i.count}+'memMail'"></td>
+				</tr>
+
+			</table>
+
+			<div th:with="start=${(detailViewDTO.recipeComments.number/maxPage)*maxPage + 1}, end=(${(detailViewDTO.recipeComments.totalPages == 0) ? 1 : (start + (maxPage - 1) < detailViewDTO.recipeComments.totalPages ? start + (maxPage - 1) : detailViewDTO.recipeComments.totalPages)})" class="pageContainer">
+				<ul class="pagination justify-content-center">
+
+					<li class="page-item" th:classappend="${detailViewDTO.recipeComments.number eq 0}?'disabled':''">
+						<a th:href="@{'/recipeBoard/recipeView' +'?writingId='+ ${writingId} +'&page=' + ${(detailViewDTO.recipeComments.number-1)>-1? detailViewDTO.recipeComments.number-1:0}}" aria-label='Previous' class="page-link">
+							<span aria-hidden='true'><</span>
+						</a>
+					</li>
+
+					<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${detailViewDTO.recipeComments.number eq page-1}?'active':''">
+						<a th:inline="text" th:href="@{'/recipeBoard/recipeView' +'?writingId='+ ${writingId} +'&page=' + ${page-1}}" class="page-link">[[${page}]]</a>
+					</li>
+
+					<li class="page-item" th:classappend="${detailViewDTO.recipeComments.number+1 ge detailViewDTO.recipeComments.totalPages}?'disabled':''">
+						<a th:href="@{'/recipeBoard/recipeView' +'?writingId='+ ${writingId} +'&page=' + ${(detailViewDTO.recipeComments.number+1)==(detailViewDTO.recipeComments.totalPages)? detailViewDTO.recipeComments.totalPages-1 : detailViewDTO.recipeComments.number+1 }}" aria-label='Next' class="page-link">
+							<span aria-hidden='true'>></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+		<textarea th:if="${member.name.toString()}=='guest'" id="commentInput" name="content" placeholder="로그인 뒤 입력해주세요" readonly="readonly"></textarea>
+		<textarea th:if="${member.name.toString()}!='guest'" id="commentInput" name="content" onkeypress="enter()"></textarea>
+		<button type="button" id="commentButton" onclick="commentSend()">댓글 입력</button>
+		<button type="button" class="backButton" onclick="location.href='/recipeBoard/';">목록으로</button>
+
+
+
+	<form th:action="@{/Notifying}" method="post" th:object="${notifyingDTO}" target="notifyingPopUp" id="notifying" style="display: none;">
+		<input type="hidden" name="title" id="notifiedTitle">
+		<input type="hidden" name="content" id="notifiedContent">
+		<input type="hidden" name="writingId" id="notifiedWritingId">
+		<input type="hidden" name="commentId" id="notifiedCommentId">
+		<input type="hidden" name="memMail" id="notifiedMemMail">
+		<input type="hidden" name="memNick" id="notifiedMemNick">
+		<input type="hidden" name="boardId" id="notifiedBoardId">
+	</form>
+</div>
+</div>
+<div style="height: 100px;">
+    
+</div>
+</div>
+</html>

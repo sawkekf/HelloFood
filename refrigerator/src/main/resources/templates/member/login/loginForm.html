@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sign In</title>
+    <link href="/css/member/login.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<img th:src="@{/img/logo_black.png}" onclick="location.href='/';" class="logo"/>
+<div class="container" id="container">
+    <!-- FORM SECTION -->
+    <form action="/member/login" method="post" role="form">
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+        <div class="row">
+            <!-- SIGN IN -->
+            <div class="col align-items-center flex-col "></div>
+            <div class="col align-items-center flex-col sign-in">
+                <div class="form-wrapper align-items-center" role="form">
+                    <div class="form sign-in">
+                        <div class="input-group">
+                            <input id = "id" name="email" placeholder=" " type="text">
+                            <label for="id">이메일</label>
+                        </div>
+                        <div class="input-group">
+                            <input id="password" name="password" placeholder=" " type="password">
+                            <label for="password">패스워드</label>
+                        </div>
+                        <p class="error" th:if="${loginErrorMsg}" th:text="${loginErrorMsg}"></p>
+                        <button class="button btnPush" type="submit"></button>
+                        <br><br>
+                        <div style="display:flex">
+                            <a href="/oauth2/authorization/google" style="background:none; margin: 0px 40px; transform: translateX(0%)"
+                               type="button">
+                                <img alt="google" height="50px" th:src="@{/img/button/google.png}" width="50px">
+                            </a>
+                            <a href="/oauth2/authorization/kakao" style="background:none; margin: 0px 40px; transform: translateX(25%)"
+                               type="button">
+                                <img alt="kakao" height="50px" th:src="@{/img/button/kakao.png}" width="50px">
+                            </a>
+                            <a href="/oauth2/authorization/naver" style="background:none; margin: 0px 40px; transform: translateX(50%)"
+                               type="button">
+                                <img alt="naver" height="50px" th:src="@{/img/button/naver.png}" width="50px">
+                            </a>
+                        </div>
+                        <p>
+                            <b class="pointer" onclick="location.href='/member/findEmail'">이메일 찾기</b>
+                            <b class="pointer" onclick="location.href='/member/findPW'">비밀번호 찾기</b>
+
+                        </p>
+                        <p>
+                            <span>회원이 아니신가요?</span>
+                            <b class="pointer" onclick="location.href='/member/new'">회원가입으로 이동</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- END SIGN IN -->
+        </div>
+    </form>
+    <!-- END FORM SECTION -->
+</div>
+<script src="/js/login.js"></script>
+<srcipt></srcipt>
+</body>
+</html>

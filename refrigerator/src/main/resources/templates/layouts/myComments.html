@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/mypage.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/style2.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <style>
+    #Mycomments{
+      width: 500px;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script th:inline="javascript">
+
+    $(document).ready(function(){
+      const urlParams = new URL(location.href).searchParams;
+      const select = urlParams.get('select');
+      if(select=='recipe'){
+        $('.boardSelector option:eq(0)').prop("selected", true);
+        $('.cookBoard').css('display','none')
+        $('.cookBoardList').css('display','none')
+        $('.noCookComment').css('display','none')
+        $('.recipeBoard').css('display','block')
+        $('.recipeBoardList').css('display','block')
+        $('.noRecipeComment').css('display','block')
+      }
+      if(select=='cook'){
+        $('.boardSelector option:eq(1)').prop("selected", true);
+        $('.recipeBoard').css('display','none');
+        $('.recipeBoardList').css('display','none')
+        $('.noRecipeComment').css('display','none')
+        $('.cookBoard').css('display','block')
+        $('.cookBoardList').css('display','block')
+        $('.noCookComment').css('display','block')
+      }
+    })
+
+    function changeBoard(){
+    	console.log($('.boardSelector option:selected').val());
+      if($('.boardSelector option:selected').val()=='recipe'){
+        location.href='/mypage/myComment?page=0&select=recipe';
+      }else if($('.boardSelector option:selected').val()=='cook'){
+        location.href='/mypage/myComment?page=0&select=cook';
+      }
+    }
+
+    function deleteMyRecipeComment(t){
+      var token=$("meta[name='_csrf']").attr("content");
+      var header=$("meta[name='_csrf_header']").attr("content");
+      var commentId = $('.'+t).val();
+      var link =  document.location.href;
+      const urlParams = new URL(location.href).searchParams;
+      const pageMinus = urlParams.get('page')-1;
+      console.log(pageMinus);
+      var url = "/recipeBoard/recipeCommentDelete/"+commentId;
+      $.ajax({
+        url : url,
+        type : 'POST',
+        beforeSend : function(xhr){
+          /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+          xhr.setRequestHeader(header,token);
+        },
+        success : function(result){
+          if($('.recipeBoard').length>1){
+            location.href=link;
+          }else if($('.recipeBoard').length==1&&pageMinus!=-1){
+            link = link.split('?')[0];
+            link = link+`?page=${pageMinus}&select=recipe`
+            location.href=link;
+          }else if($('.recipeBoard').length==1&&pageMinus==-1){
+            location.href=link;
+          }
+        },
+        error : function(){
+          alert('error');
+        }
+      });
+
+    };
+
+    function deleteMyCookComment(t){
+      var token=$("meta[name='_csrf']").attr("content");
+      var header=$("meta[name='_csrf_header']").attr("content");
+      var commentId = $('.'+t).val();
+      var link =  document.location.href;
+      const urlParams = new URL(location.href).searchParams;
+      const pageMinus = urlParams.get('page')-1;
+      console.log(commentId);
+      var url = "/cookBoard/CookCommentDelete/"+commentId;
+      $.ajax({
+        url : url,
+        type : 'POST',
+        beforeSend : function(xhr){
+          /*데이터를 전송하기 전에 헤더에 csrf 값을 설정*/
+          xhr.setRequestHeader(header,token);
+        },
+        success : function(result){
+          if($('.cookBoard').length>1){
+            location.href=link;
+          }else if($('.cookBoard').length==1&&pageMinus!=-1){
+            link = link.split('?')[0];
+            link = link+`?page=${pageMinus}&select=cook`
+            location.href=link;
+          }else if($('.cookBoard').length==1&&pageMinus==-1){
+            location.href=link;
+          }
+        },
+        error : function(){
+          alert('error');
+        }
+      });
+    };
+
+    function openResend(t){
+      var commentId = $('.'+t).val();
+      var content = $('.'+t+'content').text();
+      var boardId = $('.'+t+'board').val();
+      window.open('','myCommentResendPopUp',"toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=500, height=250px, top=0,left=20")
+      $('#commentId').val(commentId);
+      $('#content').val(content);
+      $('#boardId').val(boardId);
+      $('#resend').submit();
+    }
+
+
+  </script>
+
+  <title>Title</title>
+
+</head>
+<body class="body">
+<div class="mypage">
+  <div th:replace="fragments/lnb::navi"></div>
+  <div th:replace="fragments/gnb2::navi"></div>
+  <div layout:fragment="content"></div>
+</div>
+<script th:src="@{/js/mypage.js}" type="text/javascript"></script>
+</body>
+</html>

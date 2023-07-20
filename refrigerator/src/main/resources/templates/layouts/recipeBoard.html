@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <link th:href="@{/css/board.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/refrigerator_in.css}" type="text/css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+  <title>Title</title>
+  <style>
+  	
+  	.nonWriting{
+  		font-size: 30px;
+    	position: relative;
+    	left: 3%;
+    	padding: 10px;
+  	}
+  
+    #boardContainer{
+      background-color: rgba(255,255,255,0.8);
+      opacity : 0.9;
+      width: 1629px;
+      margin: 1% 5% 0px;
+      border-radius: 15px;
+      padding-bottom: 25px;
+      padding-left: 100px;
+      padding-top: 25px;
+    }
+    table {
+      border-top: 3px solid black;
+      width: 1500px;
+    }
+    tr,td {
+      border-bottom:1px solid gray;
+      text-align:center;
+    }
+    #column{
+      font-family: 'Do Hyeon', sans-serif;
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .img{
+      position : relative;
+      top : 2px;
+      width:50px;
+      height:50px;
+    }
+    h1{
+      font-family: 'Do Hyeon', sans-serif;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+    form{
+      display: inline-block;
+      position: relative;
+      top: 20px;
+      margin-left: 900px;
+    }
+
+    input.form-control{
+      height: 20px;
+      border-color: silver;
+    }
+
+    select.form-control{
+      margin-left : 100px;
+      height: 25px;
+      border-color: silver;
+    }
+
+    #searchBtn{
+      background-color: #4B4B4B;
+      position : relative;
+      top : 1px;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      height: 24px;
+      width: 50px;
+      cursor: pointer;
+    }
+
+    li{
+      display: inline-block;
+    }
+
+    .page-link{
+      font-weight: bolder;
+      font-size: 20px;
+      color: black;
+      font-family : sans-serif;
+      border: 1px solid silver;
+      padding-top : 0px;
+      padding-bottom : 2px;
+      padding-left: 7px;
+      padding-right: 7px;
+      margin-left: 5px;
+    }
+
+    .pagination{
+
+    }
+    .pageContainer{
+      width: 76%;
+      position: relative;
+      text-align: center;
+      display: inline-block;
+    }
+    .writingButton{
+      margin-top : 20px;
+
+      background-color: coral;
+      border: none;
+      border-radius : 10px;
+      width : 100px;
+      height: 40px;
+      color: white;
+      font-weight: bolder;
+      font-size: 16px;
+      right: -87%;
+      position: relative;
+    }
+
+    .titleLink{
+      color: black;
+      font-family: 'Do Hyeon', sans-serif;
+      font-size: 1.3em;
+    }
+    
+    .titleLink:hover{
+    	color: black;
+      font-family: 'Do Hyeon', sans-serif;
+      font-size: 1.4em;
+    }
+
+    [type=button]{
+      cursor: pointer;
+    }
+    .bestTr{
+      background-color: #FFFFE9;
+    }
+
+    .writerNick:hover {
+      font-weight: bolder;
+    }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script layout:fragment="javascript" th:inline="javascript">
+  
+    $(document).ready(function memCheck(){
+      var memRole = [[${member.role}]];
+      if(memRole!='ADMIN'){
+        $('.mypage_form').css('height','160px');
+      }
+      
+	    const urlParams = new URL(location.href).searchParams;
+	  	const name = urlParams.get('searchQuery');
+	  	if(name!==null&&name!==''){
+	  		$('.bestTr').remove();
+	  	}
+  	
+  		$('.w-nav-link').eq(1).css({'color':'black','font-weight':'bolder'});
+      
+    });
+    
+    function goWriting(){
+      var member = [[${member.name}]];
+      if(member=='guest'){
+        alert('로그인 후 시도바랍니다.')
+        location.href='/member/login';
+      }
+      if(member!='guest'){
+        var bannCheck = [[${member.banned}]]
+        var bannDate = [[${#temporals.format(member.Banndate,'yyyy-MM-dd HH:mm:ss')}]]
+        console.log(bannCheck);
+        if(bannCheck=='Y'){
+          alert('차단당하셨습니당. 차단기간은 ['+bannDate+'] 까지입니당')
+        }else{
+          location.href='/recipeBoard/recipeWrite';
+        }
+      }
+    }
+
+  </script>
+</head>
+<body class="body">
+<div th:replace="fragments/gnb::navi"></div>
+<div layout:fragment="content"></div>
+
+</body>
+</html>

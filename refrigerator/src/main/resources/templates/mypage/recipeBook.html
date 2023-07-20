@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/recipeBook}">
+
+<div layout:fragment="content">
+	<div id="boardContainer">
+	<h1>즐겨찾는 레시피</h1>
+	
+	<form class="form-inline my-2 my-lg-0" th:action="@{/mypage/recipeBook/}" method="get">
+            <div class="form-inline justify-content-center" th:object="${recipeSearchDTO}">
+                <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
+                <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+            </div>
+        </form>
+	
+	<table cellpadding="0px" cellspacing="0px">
+	<tr id="column">
+		<td>글번호</td>
+		<td>요리사진</td>
+		<td style="text-align:center">제목</td>
+		<td>난이도</td>
+		<td>글쓴이</td>
+		<td>작성일</td>
+		<td>조회수</td>
+		<td>추천수</td>
+	</tr>
+		<tr th:if="${nonRecipeWriting!=null}">
+			<td colspan="8" style="padding-top: 50px;padding-bottom: 50px; font-family: 'Do Hyeon', sans-serif; font-size: 2.0em">즐겨찾기 된 글이 없습니다.</td>
+		</tr>
+	  <tr th:each="recipeBoard :${recipeBoards}" th:id="'tr'+${recipeBoard.writingCount}">
+	  	<td th:text="${recipeBoard.writingCount}"></td>
+	  	<td th:class="${recipeBoard.writingCount}"><img class="img" th:src="${recipeBoard.recipeImage.url}" onerror="this.src='/img/restaurant.png'"></td>
+		<td style="width:300px"><a th:href="'/recipeBoard/recipeView?writingId='+${recipeBoard.writingId}" class="titleLink">[[${recipeBoard.title}]]</a></td>
+		<td th:text="${recipeBoard.difficulty}"></td>
+		<td th:text="${recipeBoard.member.nickname}"></td>
+		<td th:text="${(#temporals.format(now,'yyyy-MM-dd'))==(#temporals.format(recipeBoard.regDate,'yyyy-MM-dd')) ? (#temporals.format(recipeBoard.regDate,'HH:mm')):(#temporals.format(now,'yyyy-MM-dd'))}"></td>
+		<td th:text="${recipeBoard.seenCount}"></td>
+		<td th:text="${recipeBoard.recomCount}"></td> 
+	  </tr>
+	  
+	</table>
+	
+	 <div th:with="start=${(recipeBoards.number/maxPage)*maxPage + 1}, end=(${(recipeBoards.totalPages == 0) ? 1 : (start + (maxPage - 1) < recipeBoards.totalPages ? start + (maxPage - 1) : recipeBoards.totalPages)})" class="pageContainer" >
+	    <ul class="pagination justify-content-center">
+	    
+	    <li class="page-item" th:classappend="${recipeBoards.number eq 0}?'disabled':''">
+	        <a th:href="@{'/mypage/recipeBook' + '?page=' + ${(recipeBoards.number-1)>-1? recipeBoards.number-1:0} +'&searchQuery=' + ${recipeSearchDTO.searchQuery}}" aria-label='Previous' class="page-link">
+	          <span aria-hidden='true'><</span>
+	        </a>
+	      </li>
+	    
+	    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${recipeBoards.number eq page-1}?'active':''">
+	        <a th:inline="text" th:href="@{'/mypage/recipeBook' +'?page=' + ${page-1} +'&searchQuery=' + ${recipeSearchDTO.searchQuery}}" class="page-link">[[${page}]]</a>
+	      </li>
+	      
+	    <li class="page-item" th:classappend="${recipeBoards.number+1 ge recipeBoards.totalPages}?'disabled':''">
+	        <a th:href="@{'/mypage/recipeBook' +'?page='+ ${(recipeBoards.number+1)==(recipeBoards.totalPages)? recipeBoards.totalPages-1 : recipeBoards.number+1 } +'&searchQuery=' + ${recipeSearchDTO.searchQuery}}" aria-label='Next' class="page-link">
+	          <span aria-hidden='true'>></span>
+	        </a>
+	      </li>
+	    </ul>
+	</div>
+	
+	</div>
+</div>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<link th:href="@{/css/notifying.css}" type="text/css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Inter:wght@200&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+	<title>Insert title here</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+
+	function send(){
+		var token=$("meta[name='_csrf']").attr("content");
+		var header=$("meta[name='_csrf_header']").attr("content")
+		var member = $('#member').val();
+		var title = $('#title').val();
+		var content = $('#content').val();
+		var why = $('[name=why]:checked').val();
+		var reason = $('#reason').val();
+		var writingId = $('#writingId').val();
+		var commentId = $('#commentId').val();
+		var boardId = $('#boardId').val();
+		var url = '/doNotifying';
+		$.ajax({
+			url : url,
+			type : 'POST',
+
+			data : {
+				member : member,
+				title : title,
+				content : content,
+				why : why,
+				reason : reason,
+				writingId : writingId,
+				commentId : commentId,
+				boardId : boardId
+			},
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header,token);
+			},
+			success : function(result){
+				alert('success')
+				window.close();
+			},
+			error : function(){
+				alert('error')
+			}
+		})
+	}
+
+</script>
+
+<body>
+
+<div class="passwordInput">
+	<p>신고대상</p>
+	<input type="text" th:value="${notifyingDTO.memNick}+'('+${notifyingDTO.memMail}+')'" id ="member" readonly="readonly" placeholder=" "/>
+</div>
+
+<div th:if="${notifyingDTO.title}!=''">
+	<p>신고 제목</p>
+	<input type="text" th:value="${notifyingDTO.title}" id="title" readonly="readonly"/>
+</div>
+<div th:if="${notifyingDTO.title}==''"><input type="hidden" th:value="${notifyingDTO.title}" id="title"></div>
+
+<div>
+	<p>신고 내용</p>
+	<textarea th:text="${notifyingDTO.content}" id="content" readonly="readonly"></textarea>
+</div>
+
+<div>
+	<p>신고 사유</p>
+	<div class="radios">
+		<label>욕설</label>
+		<input type="radio" name="why" value="욕설" checked="checked">
+		<label>음란물</label>
+		<input type="radio" name="why"  value="음란물">
+		<label>무단광고</label>
+		<input type="radio" name="why"  value="무단광고">
+		<label>기타</label>
+		<input type="radio" name="why" value="기타">
+	</div>
+</div>
+
+<div>
+	<p>상세 신고 사유</p>
+	<textarea placeholder="상세 신고 사유를 적어주세요" id="reason"></textarea>
+</div>
+
+<input type="hidden" th:value="${notifyingDTO.writingId}" id="writingId">
+<input type="hidden" th:value="${notifyingDTO.commentId}" id="commentId">
+<input type="hidden" th:value="${notifyingDTO.boardId}" id="boardId">
+<div class="buttonContainer">
+	<button type="button" onclick="send()">전송</button>
+</div>
+
+
+</body>
+</html>

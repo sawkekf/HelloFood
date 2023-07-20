@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
+
+
+<div layout:fragment="content" class="in_ref_content doHyeon">
+    <main class="in_ref_main">
+        <div class="in_ref_div">
+            <div class="flex_grow1 my_ref_style recipePage1">
+
+
+
+            </div>
+            <button class="explain" readonly="readonly"></button>
+            <p class="arrow_box">선택 되었다는 표시 입니다.</p>
+            <img src="/img/cancel.png" class="explain2">
+            <p class="arrow_box2">유통기한이 지난 재료들입니다.</p>
+            <div class="flex_grow1 recipePage1">
+                <h2 style="padding: 20px 150px 10px 0px;">냉장고 속 레시피</h2>
+                <input class = "recipeInput" type="text" placeholder="검색"/>
+                <div style="  position: relative;  margin-bottom: 10px;">
+                    <b style="position: relative;left: 205px;">메뉴</b>
+                    <b style="position: relative;left: 550px;">재료</b>
+                    <b style="position: relative;left: 785px;">포함된 재료수/총 재료</b>
+                    <b style="position: relative;left: 956px;">참고</b>
+                </div>
+                <div class="recipeTable">
+                    <table  style="width:90%; margin:0 auto;" class="listTable">
+                        <tr th:if="${recipeLists.size()!= 0}" th:each="recipeList : ${recipeLists}" class = "showList">
+                            <td class= "tdsize tdcss2" style="text-align: center;">
+                                <button id="detailRecipe" class="detailRecipe Sfont" th:text="${recipeList.rep_nm}" th:value="${recipeList.id}" ></button>
+                            </td>
+                            <td class="Sfont tdsize tdcss" style="text-align:left; position: relative; left: 5%;">
+                                <span class="spants" th:text  = "${recipeList.rcp_part}"></span>
+                            </td>
+                            <td class="Sfont tdsize tdcss" style="text-align:center; position: relative; left: 7%;">
+                                <span th:text="${recipeList.count_str}"></span>
+                            </td>
+                            <td class="Sfont tdsize tdcss" style="text-align:center; position: relative; left: 2%;">
+                                <button class="blog_btn" th:value="${recipeList.rep_nm}" onclick="blogclick()">Blog</button>
+                                <button class="video_btn" th:value="${recipeList.rep_nm}" onclick="videoclick()">Video</button>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="flex_grow1 recipeDetail" >
+                <div class="mainTop">
+                    <h3 id="choiceCook"></h3>
+                    <button class ="backbtn"><span>&lang;</span></button>
+                    <button class ="backbtns"><span>&rang;</span></button>
+                    <button class ="backs"><span>◀</span></button>
+
+                </div>
+                <div class="recipeTables">
+                    <table>
+                        <tr id="rcp_part">
+
+                        </tr>
+                        <tr id="rcp_part2">
+
+                        </tr>
+
+                    </table>
+                    <ul class="recipeDetails">
+                        요리 방법
+                    </ul>
+
+                </div>
+                <button class='finishCook' onclick='finsishCook()'>요리 완료</button>
+                <div class = "finishDetail">
+
+                </div>
+            </div>
+
+            <div class="flex_grow1 checkBlog">
+                <div class="mainTop">
+                    <h3 id ="BlogCook">블로그 조회</h3>
+                    <button class ="backbtn"><span>&lang;</span></button>
+                    <button class ="backbtns"><span>&rang;</span></button>
+                    <button class ="backs"><span>◀</span></button>
+                </div>
+                <div class="recipeTables">
+                    <ul class="recipeBList">
+
+                    </ul>
+                </div>
+                <button class='finishCook' onclick='finsishCook3()' >요리 완료</button>
+                <div class = "finishVlog">
+
+                </div>
+            </div>
+            <div class="flex_grow1 checkVideo">
+                <div class="mainTop">
+                    <h3 id ="VideoCook">동영상 조회</h3>
+                    <button class ="backbtn"><span>&lang;</span></button>
+                    <button class ="backbtns"><span>&rang;</span></button>
+                    <button class ="backs"><span>◀</span></button>
+                </div>
+                <div class="recipeTables">
+                    <div class="recipeVList">
+
+                    </div>
+
+                </div>
+                <button class='finishCook' onclick='finsishCook2()' >요리 완료</button>
+
+                <div class = "finishVideo">
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <script th:src="@{/js/recipe.js}" type="text/javascript"></script>
+
+</div>
+<div layout:fragment="mask" id="mask">
+    <div class="youtube_flex">
+        <button id="closeVideo"><i class="far fa-times fa-2x" style="color: #ffffff; font-weight:600;"></i></button>
+        <iframe id="Yplayer" width="854px" height="480px" allow="accelerometer; autoplay; encrypted-media;" allowfullscreen>
+        </iframe>
+    </div>
+</div>
+
+<script layout:fragment="javascript" th:inline = "javascript">
+</script>
+
+</html>
