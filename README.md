@@ -54,7 +54,7 @@ Spring
 ```
 My SQL
 ```
-Version Control :
+- Version Control :
 ```
 Git, GitHub
 ```
