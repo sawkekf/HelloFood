@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PhoneNumberService {
     private final DefaultMessageService messageService;
-    String apiKey = "NCSF2EAU1JXGBGOP";
-    String secretKey = "XAU074ZFTZPPNYWVIBGMYAN9PDOS4HZU";
+    String apiKey = "";
+    String secretKey = "";
     private String code;
 
     public PhoneNumberService() {
