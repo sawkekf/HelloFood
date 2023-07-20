@@ -38,23 +38,23 @@
 
 # 사용 기술
 
-Frontend :
-
+- Frontend :
+```
 HTML5, CSS3, JavaScript, Jquery
-
-Backend :
-
+```
+- Backend :
+```
 Java, Python
-
-Framework :
-
+```
+- Framework :
+```
 Spring
-
-Database :
-
+```
+- Database :
+```
 My SQL
-
+```
 Version Control :
-
+```
 Git, GitHub
-
+```
