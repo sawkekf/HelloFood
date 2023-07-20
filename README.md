@@ -33,3 +33,25 @@
 [냉장고파먹기(앱)](https://apps.apple.com/kr/app/%EB%83%89%EC%9E%A5%EA%B3%A0-%ED%8C%8C%EB%A8%B9%EA%B8%B0/id1623066651) :
 
 냉장고 안의 식자재를 앱 상에 등록하여 정보를 파악할 수 있다는 점에서 해당 어플리케이션을 벤치마킹했습니다. 해당 앱과 본 프로젝트의 차별점으로는 본 프로젝트의 경우 보다 상세한 식자재 관리가 가능합니다.. 냉장고 파먹기 어플리케이션의 경우, 단순한 신선도 체크 기능만을 제공합니다. 하지만, 저희는 유통기한(혹은 소비기한) 등록을 통한 냉장고 관리,  레시피에 따른 식자재 소비체크를 통한 재고의 자동관리 등을 제공하고자 합니다.
+
+# 사용 기술
+
+Frontend :
+
+HTML5, CSS3, JavaScript, Jquery
+
+Backend :
+
+Java, Python
+
+Framework :
+
+Spring
+
+Database :
+
+My SQL
+
+Version Control :
+
+Git, GitHub
