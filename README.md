@@ -1,3 +1,4 @@
+<p align="center">
 # HelloFood
 
 프로젝트 명 : Hello Food - 냉장고를 부탁해
