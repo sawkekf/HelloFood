@@ -1,9 +1,7 @@
-<p align="center">
- <p align="center">
-<h1> 
-HelloFood
-</h1>
-</p>
+
+
+# HelloFood
+
 프로젝트 명 : Hello Food - 냉장고를 부탁해
 
 # 선정 이유
