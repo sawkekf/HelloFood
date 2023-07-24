@@ -113,7 +113,7 @@ Git, GitHub
 
 # DataBase
 
-<img src="image/totalDB.png"/>
+<img src="image/TotalDB.png"/>
 
 <img src="image/refDB.png"/>
 
