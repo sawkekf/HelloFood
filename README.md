@@ -105,6 +105,8 @@ Git, GitHub
  <img src="image/Google Custom Search API.jpg" width="200px"/>
  
  <h4>GoogleCustomSearchAPI, GoogleYoutubeAPI</h4>
+
+ <img src="image/loginAPI.jpg" width="200px"/>
  
  <h4>NaverLoginAPI, GoogleLoginAPI, KakaoLoginAPI</h4>
 
