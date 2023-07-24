@@ -2,7 +2,7 @@
 
 # HelloFood
 
-<h2>프로젝트 명 : Hello Food - 냉장고를 부탁해</h2>
+<h3>프로젝트 명 : Hello Food - 냉장고를 부탁해</h3>
 
 # 선정 이유
 
