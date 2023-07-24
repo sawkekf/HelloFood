@@ -98,7 +98,7 @@
 Git, GitHub
 ```
 # API
-<img src="image/Google-Bard-API.jpg"/>
+<img src="image/Google-Bard-API.jpg" width="200px" height="200px"/>
 
  <h4>BardAPI</h4>
  
