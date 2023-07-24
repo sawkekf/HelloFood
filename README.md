@@ -98,22 +98,29 @@
 Git, GitHub
 ```
 # API
+
+<br>
+<br>
 <img src="image/Google-Bard-API.jpg" width="200px"/>
 
  <h4>BardAPI</h4>
-
+<br>
+<br>
  <img src="image/Google Custom Search API.jpg" width="200px"/>
  
  <h4>GoogleCustomSearchAPI, GoogleYoutubeAPI</h4>
-
+<br>
+<br>
  <img src="image/loginAPI.jpg" width="200px"/>
  
  <h4>NaverLoginAPI, GoogleLoginAPI, KakaoLoginAPI</h4>
-
+<br>
+<br>
 <img src="image/coolsms.png" width="200px"/>
 
  <h4>CoolSMSAPI</h4>
-
+<br>
+<br>
 # DataBase
 
 <img src="image/TotalDB.png"/>
