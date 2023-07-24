@@ -65,7 +65,7 @@ Git, GitHub
 
 <img src="image/getRecipe.gif"/>
 
-<h3>Hello Food - 냉장고를 부탁해</h3><span style="color : red">는 BardAPI를 이용하여 사용자들에게 레시피를 제공합니다.</span>
+<h4>Hello Food - 냉장고를 부탁해는 BardAPI를 이용하여 사용자들에게 레시피를 제공합니다.</h4>
 
 <img src="image/refrigerator.gif"/>
 
