@@ -97,7 +97,19 @@
 ```
 Git, GitHub
 ```
-- API
-```
- BardAPI, GoogleCustomSearchAPI, GoogleYoutubeAPI, NaverLoginAPI, GoogleLoginAPI, KakaoLoginAPI, NaverMailAPI
-```
+# API
+
+ BardAPI
+ 
+ GoogleCustomSearchAPI
+ 
+ GoogleYoutubeAPI
+ 
+ NaverLoginAPI, GoogleLoginAPI, KakaoLoginAPI
+ 
+ NaverMailAPI
+
+ CoolSMSAPI
+
+# DataBase
+
