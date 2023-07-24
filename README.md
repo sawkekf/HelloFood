@@ -118,7 +118,7 @@ Git, GitHub
 <br>
 <img src="image/coolsms.png" width="200px"/>
 
- <h3>CoolSMSAPI</h3>
+ <h3>CoolsmsAPI</h3>
 <br>
 <br>
 # DataBase
