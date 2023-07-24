@@ -101,13 +101,9 @@ Git, GitHub
 
  <h4>BardAPI</h4>
  
- <h4>GoogleCustomSearchAPI</h4>
- 
- <h4>GoogleYoutubeAPI</h4>
+ <h4>GoogleCustomSearchAPI, GoogleYoutubeAPI</h4>
  
  <h4>NaverLoginAPI, GoogleLoginAPI, KakaoLoginAPI</h4>
- 
- <h4>NaverMailAPI</h4>
 
  <h4>CoolSMSAPI</h4>
 
