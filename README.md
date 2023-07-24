@@ -64,3 +64,9 @@ Git, GitHub
 # 사용 예시
 
 <img src="image/getRecipe.gif"/>
+
+
+<img src="image/refrigerator.gif"/>
+
+
+<img src="image/refrigeratorRecipe.gif"/>
