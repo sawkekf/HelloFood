@@ -53,10 +53,6 @@
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
 <img src="image/refrigerator.gif"/>
 
 <h3>냉장고 - 식품 관리 기능</h3>
@@ -66,19 +62,11 @@
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
 <img src="image/refrigeratorRecipe.gif"/>
 
 <h3>냉장고 속 레시피</h3>
 
 <h4>냉장고 속 레시피는 냉장고 안에 저장된 식품으로 만들 수 있는 레시피를 제공합니다.</h4>
-<br>
-<br>
-<br>
-<br>
 <br>
 <br>
 <br>
