@@ -47,8 +47,6 @@
 <img src="image/getRecipe.gif"/>
 <br>
 <br>
-<br>
-<br>
 <h3>API를 이용한 레시피 출력</h3>
 
 <h4>레시피 출력 기능은 BardAPI를 이용하여 사용자들에게 여러가지 레시피를 제공합니다.</h4>
@@ -59,8 +57,6 @@
 <img src="image/refrigerator.gif"/>
 <br>
 <br>
-<br>
-<br>
 <h3>냉장고 - 식품 관리 기능</h3>
 
 <h4>냉장고를 이용하여 식품의 유통기한, 사용처 등을 관리할 수 있습니다.</h4>
@@ -69,8 +65,6 @@
 <br>
 <br>
 <img src="image/refrigeratorRecipe.gif"/>
-<br>
-<br>
 <br>
 <br>
 <h3>냉장고 속 레시피</h3>
